@@ -1,0 +1,6 @@
+{
+  "name": "Build Minds",
+  "description": "Train Minds Build Products. Master AI & Agentic Systems with weekly live builds, The Agent Builder Intensive, and direct engineering mentorship.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
