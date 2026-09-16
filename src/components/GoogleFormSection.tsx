@@ -34,7 +34,7 @@ export const GoogleFormSection: React.FC<GoogleFormSectionProps> = ({ onNavigate
             Register for The Agent Builder Intensive
           </h2>
           <p className="text-base sm:text-lg text-slate-300">
-            Submit your application for the upcoming <strong>16 Sep 2026</strong> fellowship batch. Reviewed directly by Mohammed Jameel and Naveed KS.
+            Submit your application for the upcoming <strong>21 Sep 2026</strong> fellowship batch. Reviewed directly by Mohammed Jameel and Naveed KS.
           </p>
         </div>
 
@@ -110,13 +110,15 @@ export const GoogleFormSection: React.FC<GoogleFormSectionProps> = ({ onNavigate
             <iframe
               key={iframeKey}
               src={AGENT_BUILDER_INTENSIVE.googleFormUrl}
-              width="640"
-              height="2800"
+              width="100%"
+              height="4000"
               frameBorder="0"
               marginHeight={0}
               marginWidth={0}
-              title="Build Minds Registration Form 16 Sep 2026"
+              scrolling="no"
+              title="Build Minds Registration Form 21 Sep 2026"
               className="w-full max-w-2xl border-0"
+              style={{ height: '4000px', minHeight: '4000px' }}
             >
               Loading application form…
             </iframe>
@@ -127,7 +129,7 @@ export const GoogleFormSection: React.FC<GoogleFormSectionProps> = ({ onNavigate
             <div className="flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#D98A1E]" />
               <span>
-                Cohort starts 16 Sep 2026. Fellows receive repo invites & setup guide 48 hours prior.
+                Cohort starts 21 Sep 2026. Fellows receive repo invites & setup guide 48 hours prior.
               </span>
             </div>
 

@@ -31,9 +31,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 className="bg-[#D98A1E] text-white hover:bg-[#e7992c] text-xs font-bold px-3.5 py-2 rounded-xl transition inline-flex items-center gap-1.5 shadow-md shadow-[#D98A1E]/20 cursor-pointer"
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span>16 Sep Google Form</span>
+                <span>21 Sep Google Form</span>
               </button>
-
+ 
               <button
                 id="footer-weekly-event-btn"
                 onClick={() => {
@@ -61,7 +61,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   }}
                   className="hover:text-[#D98A1E] transition flex items-center gap-1.5 text-left"
                 >
-                  <span>16 Sep 2026 Batch Form</span>
+                  <span>21 Sep 2026 Batch Form</span>
                   <span className="text-[9px] bg-[#D98A1E] text-white font-bold px-1.5 py-0.5 rounded">Live</span>
                 </button>
               </li>

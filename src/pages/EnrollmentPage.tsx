@@ -113,7 +113,7 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
                   Choose Your Cohort Track
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                  Flagship 14-Day Intensive (6 Sprints + Python Basecamp + Hackathon) starting <strong>16 Sep 2026</strong>.
+                  Flagship 14-Day Intensive (6 Sprints + Python Basecamp + Hackathon) starting <strong>21 Sep 2026</strong>.
                 </p>
               </div>
 
@@ -499,7 +499,7 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
                 Welcome to Build Minds, {fullName || 'Fellow'}!
               </h2>
               <p className="text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
-                Your seat in <strong>{activePath.title}</strong> for the <strong>16 Sep 2026</strong> fellowship batch is locked at the special launch rate of <strong>₹{launchPrice.toLocaleString()} INR</strong>.
+                Your seat in <strong>{activePath.title}</strong> for the <strong>21 Sep 2026</strong> fellowship batch is locked at the special launch rate of <strong>₹{launchPrice.toLocaleString()} INR</strong>.
               </p>
             </div>
 
@@ -510,7 +510,7 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Cohort Start Date:</span>
-                <span className="text-white font-semibold">16 Sep 2026 (14 Days • 6 Sprints)</span>
+                <span className="text-white font-semibold">21 Sep 2026 (14 Days • 6 Sprints)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Tuition Paid:</span>

@@ -38,6 +38,17 @@ export const WeeklyEventPage: React.FC<WeeklyEventPageProps> = ({ onNavigate }) 
     setTicketId(passCode);
     setIsRegistered(true);
 
+    const waMsg = `Hello Build Minds, I would like to claim my Free Sunday Pass for the Live Agentic AI Workshop.
+
+Details:
+• Name: ${name}
+• Email: ${email}
+• Role: ${role.trim() || 'Not specified'}
+• Pass ID: ${passCode}`;
+
+    const whatsappUrl = `https://wa.me/918892920286?text=${encodeURIComponent(waMsg)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
     try {
       confetti({
         particleCount: 100,
@@ -323,11 +334,12 @@ END:VCALENDAR`;
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 mb-1">
-                      Current Role / Focus
+                      Current Role / Focus *
                     </label>
                     <input
                       type="text"
-                      placeholder="e.g. Senior Software Engineer / Founder"
+                      required
+                      placeholder="e.g. Senior Software Engineer / Founder / Student"
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-[#0B131B] border border-[#25374C] text-white text-sm focus:outline-none focus:border-[#D98A1E]"
@@ -336,9 +348,10 @@ END:VCALENDAR`;
 
                   <button
                     type="submit"
+                    id="claim-free-sunday-pass-btn"
                     className="w-full bg-[#D98A1E] hover:bg-[#e7992c] text-white font-extrabold text-sm py-3.5 rounded-xl transition shadow-lg shadow-[#D98A1E]/25 flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
-                    <span>Confirm Free Sunday Pass (2 Sessions)</span>
+                    <span>Claim Free Sunday Pass</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
@@ -351,7 +364,7 @@ END:VCALENDAR`;
                   <div>
                     <h4 className="text-lg font-bold text-white">Seat Confirmed!</h4>
                     <p className="text-xs text-slate-300 mt-1">
-                      Welcome, <strong className="text-white">{name}</strong>! Zoom links for this Sunday are on their way.
+                      Welcome, <strong className="text-white">{name}</strong> ({role})! Pass details dispatched to WhatsApp (+91 8892920286). Zoom links for this Sunday are on their way.
                     </p>
                   </div>
 
@@ -369,7 +382,7 @@ END:VCALENDAR`;
                 </div>
               )}
 
-              {/* Pathway to 16 Sep Intensive with ₹6,000 launch pricing */}
+              {/* Pathway to 21 Sep Intensive with ₹6,000 launch pricing */}
               <div className="pt-4 border-t border-[#25374C] space-y-3">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-300 font-semibold">14-Day Intensive (6 Sprints):</span>

@@ -203,7 +203,7 @@ export const UpiPaymentQr: React.FC<UpiPaymentQrProps> = ({
           <span>Confirm Your Payment</span>
         </div>
         <p className="text-slate-400 leading-relaxed">
-          After completing the UPI transfer, enter your 12-digit UPI Reference / UTR Number below to instantly lock in your seat for the 16 Sep 2026 fellowship batch:
+          After completing the UPI transfer, enter your 12-digit UPI Reference / UTR Number below to instantly lock in your seat for the 21 Sep 2026 fellowship batch:
         </p>
 
         {!verified ? (

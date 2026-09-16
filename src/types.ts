@@ -47,6 +47,7 @@ export interface Mentor {
   rating: number;
   sessionsConducted: number;
   availableSlots: string[];
+  whatsappNumber?: string;
 }
 
 export interface WeeklyEventSession {

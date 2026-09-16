@@ -12,6 +12,7 @@ export const WeeklyEventSection: React.FC<WeeklyEventSectionProps> = ({ onNaviga
   const [activeTab, setActiveTab] = useState<'session1' | 'session2'>('session1');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [role, setRole] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
   const [ticketNumber, setTicketNumber] = useState('');
 
@@ -22,6 +23,17 @@ export const WeeklyEventSection: React.FC<WeeklyEventSectionProps> = ({ onNaviga
     const randomTicket = `BM-FREE-${Math.floor(100000 + Math.random() * 900000)}`;
     setTicketNumber(randomTicket);
     setIsRegistered(true);
+
+    const waMsg = `Hello Build Minds, I would like to claim my Free Sunday Pass for the Live Agentic AI Workshop.
+
+Details:
+• Name: ${name}
+• Email: ${email}
+• Role: ${role.trim() || 'Not specified'}
+• Pass ID: ${randomTicket}`;
+
+    const whatsappUrl = `https://wa.me/918892920286?text=${encodeURIComponent(waMsg)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     try {
       confetti({
@@ -263,6 +275,20 @@ END:VCALENDAR`;
                     />
                   </div>
 
+                  <div>
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
+                      Current Role / Designation *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Software Engineer / Tech Lead / Student"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0B131B] border border-[#25374C] text-white text-sm focus:outline-none focus:border-[#D98A1E]"
+                    />
+                  </div>
+
                   <button
                     type="submit"
                     id="submit-weekly-event-pass-btn"
@@ -274,7 +300,7 @@ END:VCALENDAR`;
 
                   <div className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5 pt-1">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#D98A1E]" />
-                    <span>No credit card required. Zoom links delivered to your inbox.</span>
+                    <span>Instant WhatsApp pass delivery to 8892920286. No credit card required.</span>
                   </div>
                 </form>
               ) : (
@@ -286,7 +312,7 @@ END:VCALENDAR`;
                   <div>
                     <h4 className="text-lg font-bold text-white">VIP Pass Confirmed!</h4>
                     <p className="text-xs text-slate-300 mt-1">
-                      Welcome, <strong className="text-white">{name}</strong>! Your seat is reserved for this upcoming Sunday (10:00 AM – 6:00 PM IST).
+                      Welcome, <strong className="text-white">{name}</strong> ({role || 'Participant'})! Details dispatched to WhatsApp (+91 8892920286). Your seat is reserved for this upcoming Sunday (10:00 AM – 6:00 PM IST).
                     </p>
                   </div>
 
@@ -304,14 +330,14 @@ END:VCALENDAR`;
                 </div>
               )}
 
-              {/* Pathway to 16 Sep Agent Builder Intensive with Launch Price Callout */}
+              {/* Pathway to 21 Sep Agent Builder Intensive with Launch Price Callout */}
               <div className="mt-4 pt-5 border-t border-[#25374C] space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-semibold text-white">Full 14-Day Intensive:</span>
                   <span className="text-emerald-400 font-bold font-mono">₹6,000 INR (Save ₹89,000)</span>
                 </div>
                 <p className="text-[11px] text-slate-400">
-                  Ready for 6 comprehensive engineering sprints + capstone hackathon starting 16 Sep 2026?
+                  Ready for 6 comprehensive engineering sprints + capstone hackathon starting 21 Sep 2026?
                 </p>
                 <button
                   id="weekly-event-to-intensive-btn"

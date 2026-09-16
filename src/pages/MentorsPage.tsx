@@ -14,10 +14,19 @@ export const MentorsPage: React.FC<MentorsPageProps> = ({ onNavigate }) => {
   const [email, setEmail] = useState('');
   const [booked, setBooked] = useState(false);
 
+  const getMentorWhatsAppUrl = (mentor: Mentor, slot?: string) => {
+    const number = mentor.whatsappNumber || (mentor.id === 'mohammed-jameel' ? '9886558433' : '9620335582');
+    const message = slot
+      ? `Hello ${mentor.name}, I would like to book a 1:1 Office Hours session for ${slot} regarding Build Minds. Please let me know if this works.`
+      : `Hello ${mentor.name}, I would like to book a 1:1 Office Hours session with you regarding Build Minds. Please share your available slots.`;
+    return `https://wa.me/91${number}?text=${encodeURIComponent(message)}`;
+  };
+
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedMentor || !selectedSlot || !name || !email) return;
     setBooked(true);
+    window.open(getMentorWhatsAppUrl(selectedMentor, selectedSlot), '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -83,17 +92,16 @@ export const MentorsPage: React.FC<MentorsPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="shrink-0 flex items-center gap-3">
-              <button
-                onClick={() => {
-                  setSelectedMentor(MENTORS[0]);
-                  setSelectedSlot(MENTORS[0].availableSlots[0]);
-                  setBooked(false);
-                }}
+              <a
+                href={getMentorWhatsAppUrl(MENTORS[0])}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#D98A1E] hover:bg-[#e7992c] text-white text-xs font-bold px-5 py-3 rounded-xl transition shadow-md shadow-[#D98A1E]/20 flex items-center gap-2 cursor-pointer"
+                title="Book 1:1 Office Hours with Mohammed Jameel on WhatsApp (9886558433)"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book 1:1 Office Hours</span>
-              </button>
+              </a>
             </div>
           </div>
 
@@ -231,17 +239,16 @@ export const MentorsPage: React.FC<MentorsPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="shrink-0 flex items-center gap-3">
-              <button
-                onClick={() => {
-                  setSelectedMentor(MENTORS[1]);
-                  setSelectedSlot(MENTORS[1].availableSlots[0]);
-                  setBooked(false);
-                }}
+              <a
+                href={getMentorWhatsAppUrl(MENTORS[1])}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-[#D98A1E] hover:bg-[#e7992c] text-white text-xs font-bold px-5 py-3 rounded-xl transition shadow-md shadow-[#D98A1E]/20 flex items-center gap-2 cursor-pointer"
+                title="Book 1:1 Office Hours with Naveed KS on WhatsApp (9620335582)"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Book 1:1 Office Hours</span>
-              </button>
+              </a>
             </div>
           </div>
 

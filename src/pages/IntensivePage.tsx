@@ -75,7 +75,7 @@ export const IntensivePage: React.FC<IntensivePageProps> = ({ onNavigate }) => {
             <div className="pt-2 flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-300">
               <span className="flex items-center gap-1.5 font-bold text-white">
                 <Calendar className="w-4 h-4 text-[#D98A1E]" />
-                Commences: 16 Sep 2026
+                Commences: 21 Sep 2026
               </span>
               <span className="text-slate-500">•</span>
               <span className="flex items-center gap-1.5 font-bold text-white">

@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Calendar, Clock, Star, Users, ShieldCheck, FileSpreadsheet, Bot, Cpu, Sparkles } from 'lucide-react';
 import { PageRoute } from '../types';
 import { WEEKLY_EVENT, AGENT_BUILDER_INTENSIVE, BRAND } from '../data/buildMindsData';
+import heroBgImg from '../assets/images/outskill_hero_bg_1789149819245.jpg';
 
 interface HeroProps {
   onNavigate: (page: PageRoute) => void;
@@ -10,13 +11,21 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   return (
     <section id="hero" className="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#0B131B] text-white">
-      {/* Background Ambience with Navy and Golden Glow */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-[#D98A1E]/8 blur-[140px] rounded-full" />
-        <div className="absolute -top-10 left-10 w-96 h-96 bg-[#25374C]/30 blur-[100px] rounded-full" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#162332]/40 blur-[120px] rounded-full" />
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1b283715_1px,transparent_1px),linear-gradient(to_bottom,#1b283715_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      {/* Background Image: outskill_hero_bg_1789149819245.jpg */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src={heroBgImg}
+          alt="Build Minds AI Background"
+          className="w-full h-full object-cover object-center opacity-45"
+        />
+        {/* Navy and atmospheric gradient overlays for high legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B131B]/70 via-[#0B131B]/80 to-[#0B131B]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B131B]/90 via-[#0B131B]/40 to-[#0B131B]/85" />
+        
+        {/* Golden ambient glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-[#D98A1E]/12 blur-[140px] rounded-full" />
+        <div className="absolute -top-10 left-10 w-96 h-96 bg-[#25374C]/35 blur-[100px] rounded-full" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#162332]/50 blur-[120px] rounded-full" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 w-full">
@@ -25,7 +34,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           <span className="flex h-2 w-2 rounded-full bg-[#D98A1E] animate-ping" />
           <span className="font-bold text-[#D98A1E] uppercase tracking-wider">{BRAND.tagline}</span>
           <span className="text-slate-500">|</span>
-          <span className="text-slate-300">Upcoming Intensive: 16 Sep 2026</span>
+          <span className="text-slate-300">Upcoming Intensive: 21 Sep 2026</span>
           <button
             id="hero-banner-register-btn"
             onClick={() => onNavigate('register')}
@@ -87,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* The Agent Builder Intensive (16 Sep 2026) Callout Card */}
+          {/* The Agent Builder Intensive (21 Sep 2026) Callout Card */}
           <div className="p-4 sm:p-5 rounded-2xl bg-[#162332]/90 border border-[#25374C] backdrop-blur-md max-w-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <div className="p-2.5 rounded-xl bg-[#D98A1E]/15 border border-[#D98A1E]/30 text-[#D98A1E]">
@@ -97,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
                   <span>The Agent Builder Intensive</span>
                   <span className="text-[10px] bg-[#D98A1E]/20 text-[#D98A1E] border border-[#D98A1E]/40 px-2 py-0.5 rounded-full font-semibold">
-                    16 Sep 2026 Batch
+                    21 Sep 2026 Batch
                   </span>
                   <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
                     Launch Price: ₹6,000 INR

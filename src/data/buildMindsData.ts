@@ -34,7 +34,8 @@ export const MENTORS: Mentor[] = [
     skills: ['AI Optimization', 'API Integration', 'Software Support', 'Product Development', 'Agile Leadership'],
     rating: 4.97,
     sessionsConducted: 480,
-    availableSlots: ['Wed 6:00 PM IST', 'Fri 5:30 PM IST', 'Sat 11:30 AM IST']
+    availableSlots: ['Wed 6:00 PM IST', 'Fri 5:30 PM IST', 'Sat 11:30 AM IST'],
+    whatsappNumber: '9886558433'
   },
   {
     id: 'naveed-ks',
@@ -64,7 +65,8 @@ export const MENTORS: Mentor[] = [
     skills: ['Groq / Claude / Gemini', 'Agentic Testing', 'ChromaDB', 'Python/Java', 'CI/CD Pipelines', 'Streamlit'],
     rating: 4.99,
     sessionsConducted: 540,
-    availableSlots: ['Tue 7:00 PM IST', 'Thu 6:30 PM IST', 'Sat 4:00 PM IST']
+    availableSlots: ['Tue 7:00 PM IST', 'Thu 6:30 PM IST', 'Sat 4:00 PM IST'],
+    whatsappNumber: '9620335582'
   }
 ];
 
@@ -149,7 +151,7 @@ export const AGENT_BUILDER_INTENSIVE = {
   title: 'The Agent Builder Intensive',
   badge: 'Flagship 14-Day Cohort • 6 Sprints',
   tagline: '14 Days, 6 Sprints: From Foundation to Production-Grade Autonomous Multi-Agent Systems',
-  startDate: '16 Sep 2026',
+  startDate: '21 Sep 2026',
   duration: '14 Days (6 Sprints + Python Basecamp + Hackathon) + 6 Months Mentor Access',
   format: 'Live Immersive Sprints (7:00 PM – 11:00 PM IST) + Weekend Capstone Labs + 1:1 Defenses',
   batchSize: 'Strictly Capped at 50 Fellows',

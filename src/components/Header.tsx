@@ -3,6 +3,7 @@ import { BuildMindsLogo } from './BuildMindsLogo';
 import { Calendar, FileText, Menu, X, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 import { PageRoute } from '../types';
 import logoImg from '../assets/images/direct_white_logo_only.png';
+import heroBgImg from '../assets/images/outskill_hero_bg_1789149819245.jpg';
 
 interface HeaderProps {
   currentPage: PageRoute;
@@ -19,8 +20,18 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0E1722]/90 backdrop-blur-md border-b border-[#25374C]/80 transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-40 relative overflow-hidden bg-[#0E1722]/95 border-b border-[#25374C]/80 transition-all">
+      {/* Background Image from assets/images/outskill_hero_bg_1789149819245.jpg */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <img
+          src={heroBgImg}
+          alt=""
+          className="w-full h-full object-cover object-top opacity-30"
+        />
+        <div className="absolute inset-0 bg-[#0E1722]/85 backdrop-blur-md" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Logo & Name: Round logo without padding, 2-color brand text, no tagline */}
         <button
           id="brand-logo-btn"
@@ -115,10 +126,10 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             id="nav-apply-form-btn"
             onClick={() => handleNav('register')}
             className="flex items-center gap-1.5 text-xs font-bold text-white bg-[#D98A1E] hover:bg-[#e7992c] px-4 py-2.5 rounded-xl transition shadow-md shadow-[#D98A1E]/20 cursor-pointer"
-            title="Open Registration Page for 16 Sep 2026 Intensive"
+            title="Open Registration Page for 21 Sep 2026 Intensive"
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>Apply 16 Sep Form</span>
+            <span>Apply 21 Sep Form</span>
           </button>
         </div>
 
@@ -164,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             onClick={() => handleNav('intensive')}
             className="w-full text-left py-2.5 text-slate-200 hover:text-[#D98A1E] font-medium"
           >
-            The Agent Builder Intensive (16 Sep 2026)
+            The Agent Builder Intensive (21 Sep 2026)
           </button>
           <button
             onClick={() => handleNav('curriculum')}
@@ -190,7 +201,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
               className="w-full py-3 bg-[#D98A1E] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#D98A1E]/20"
             >
               <FileText className="w-4 h-4" />
-              <span>Fill 16 Sep Registration Form</span>
+              <span>Fill 21 Sep Registration Form</span>
             </button>
           </div>
         </div>

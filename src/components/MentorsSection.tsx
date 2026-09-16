@@ -14,10 +14,21 @@ export const MentorsSection: React.FC<MentorsSectionProps> = ({ onNavigate }) =>
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
 
+  const getMentorWhatsAppUrl = (mentor: Mentor, slot?: string) => {
+    const number = mentor.whatsappNumber || (mentor.id === 'mohammed-jameel' ? '9886558433' : '9620335582');
+    const message = slot
+      ? `Hello ${mentor.name}, I would like to book a 1:1 Office Hours session for ${slot} regarding Build Minds. Please let me know if this works.`
+      : `Hello ${mentor.name}, I would like to book a 1:1 Office Hours session with you regarding Build Minds. Please share your available slots.`;
+    return `https://wa.me/91${number}?text=${encodeURIComponent(message)}`;
+  };
+
   const handleBookSlot = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedSlot || !userEmail || !userName) return;
     setBookingSuccess(true);
+    if (selectedMentor) {
+      window.open(getMentorWhatsAppUrl(selectedMentor, selectedSlot), '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
@@ -128,18 +139,17 @@ export const MentorsSection: React.FC<MentorsSectionProps> = ({ onNavigate }) =>
 
               {/* Action Buttons */}
               <div className="pt-4 border-t border-[#25374C] flex flex-col sm:flex-row items-center justify-between gap-3">
-                <button
+                <a
                   id={`book-mentor-${mentor.id}-btn`}
-                  onClick={() => {
-                    setSelectedMentor(mentor);
-                    setSelectedSlot(mentor.availableSlots[0]);
-                    setBookingSuccess(false);
-                  }}
+                  href={getMentorWhatsAppUrl(mentor)}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full sm:w-auto bg-[#D98A1E] hover:bg-[#e7992c] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 shadow cursor-pointer"
+                  title={`Book 1:1 Office Hours with ${mentor.name} via WhatsApp`}
                 >
                   <Calendar className="w-3.5 h-3.5" />
                   <span>Book 1:1 Office Hours</span>
-                </button>
+                </a>
 
                 <button
                   id={`view-full-resume-${mentor.id}-btn`}
