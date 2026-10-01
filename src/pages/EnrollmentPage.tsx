@@ -102,10 +102,12 @@ Hello Mohammed Jameel, I have completed the tuition payment for The Agent Builde
         <div className="flex items-center justify-between">
           <button
             onClick={() => onNavigate('home')}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-4 py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
+            aria-label="Back to Home"
+            title="Back to Home"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-3 py-2 sm:px-4 sm:py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#D98A1E]" />
-            <span>Back to Home</span>
+            <span className="hidden sm:inline">Back to Home</span>
           </button>
 
           <span className="text-xs font-mono text-[#D98A1E] font-bold bg-[#D98A1E]/10 px-3 py-1 rounded-full border border-[#D98A1E]/20">
@@ -113,34 +115,47 @@ Hello Mohammed Jameel, I have completed the tuition payment for The Agent Builde
           </span>
         </div>
 
-        {/* Progress Bar */}
-        <div className="p-4 rounded-2xl bg-[#162332] border border-[#25374C] flex items-center justify-between text-xs font-semibold text-slate-300">
-          <div className={`flex items-center gap-2 ${step >= 1 ? 'text-[#D98A1E]' : 'text-slate-500'}`}>
-            <span className="w-6 h-6 rounded-full bg-[#0B131B] border border-current flex items-center justify-center font-bold">
-              1
-            </span>
-            <span>Select Track</span>
-          </div>
-          <div className="w-8 sm:w-12 h-px bg-[#25374C]" />
-          <div className={`flex items-center gap-2 ${step >= 2 ? 'text-[#D98A1E]' : 'text-slate-500'}`}>
-            <span className="w-6 h-6 rounded-full bg-[#0B131B] border border-current flex items-center justify-center font-bold">
-              2
-            </span>
-            <span>Profile</span>
-          </div>
-          <div className="w-8 sm:w-12 h-px bg-[#25374C]" />
-          <div className={`flex items-center gap-2 ${step >= 3 ? 'text-[#D98A1E]' : 'text-slate-500'}`}>
-            <span className="w-6 h-6 rounded-full bg-[#0B131B] border border-current flex items-center justify-center font-bold">
-              3
-            </span>
-            <span>Payment & QR</span>
-          </div>
-          <div className="w-8 sm:w-12 h-px bg-[#25374C]" />
-          <div className={`flex items-center gap-2 ${step === 4 ? 'text-[#D98A1E]' : 'text-slate-500'}`}>
-            <span className="w-6 h-6 rounded-full bg-[#0B131B] border border-current flex items-center justify-center font-bold">
-              4
-            </span>
-            <span>Confirmed</span>
+        {/* Progress Bar (Clutter-free & responsive on mobile) */}
+        <div className="p-3 sm:p-4 rounded-2xl bg-[#162332] border border-[#25374C]">
+          <div className="grid grid-cols-4 gap-1.5 sm:flex sm:items-center sm:justify-between text-xs font-semibold">
+            {[
+              { num: 1, shortLabel: 'Track', fullLabel: 'Select Track' },
+              { num: 2, shortLabel: 'Profile', fullLabel: 'Profile' },
+              { num: 3, shortLabel: 'Payment', fullLabel: 'Payment & QR' },
+              { num: 4, shortLabel: 'Confirmed', fullLabel: 'Confirmed' },
+            ].map((s, idx) => {
+              const isCurrent = step === s.num;
+              const isCompleted = step > s.num;
+              const isActiveOrPast = step >= s.num;
+              return (
+                <React.Fragment key={s.num}>
+                  <div
+                    className={`flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1.5 sm:gap-2 text-center sm:text-left transition ${
+                      isActiveOrPast ? 'text-[#D98A1E]' : 'text-slate-500'
+                    }`}
+                  >
+                    <span
+                      className={`w-7 h-7 sm:w-6 sm:h-6 rounded-full flex items-center justify-center font-bold text-xs shrink-0 transition ${
+                        isCurrent
+                          ? 'bg-[#D98A1E] text-black ring-2 ring-[#D98A1E]/40 font-black'
+                          : isCompleted
+                          ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50'
+                          : 'bg-[#0B131B] border border-slate-700 text-slate-400'
+                      }`}
+                    >
+                      {isCompleted ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : s.num}
+                    </span>
+                    <span className="leading-tight">
+                      <span className="sm:hidden text-[10px] font-bold block">{s.shortLabel}</span>
+                      <span className="hidden sm:inline">{s.fullLabel}</span>
+                    </span>
+                  </div>
+                  {idx < 3 && (
+                    <div className="hidden sm:block flex-1 mx-2 h-px bg-[#25374C]" />
+                  )}
+                </React.Fragment>
+              );
+            })}
           </div>
         </div>
 

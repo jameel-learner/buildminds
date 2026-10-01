@@ -31,10 +31,12 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
           <button
             id="register-back-to-home-btn"
             onClick={() => onNavigate('home')}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-4 py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
+            aria-label="Back to Home"
+            title="Back to Home"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-3 py-2 sm:px-4 sm:py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#D98A1E]" />
-            <span>Back to Home</span>
+            <span className="hidden sm:inline">Back to Home</span>
           </button>
 
           <div className="text-xs text-slate-400 font-mono">
@@ -137,21 +139,20 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
         </div>
 
         {/* Embedded Google Form Container */}
-        <div className="rounded-3xl bg-[#162332] border border-[#25374C] p-3 sm:p-6 shadow-2xl overflow-hidden relative">
-          <div className="w-full bg-white rounded-2xl overflow-hidden flex flex-col items-center min-h-[4000px]">
+        <div className="rounded-3xl bg-[#162332] border border-[#25374C] p-2 sm:p-6 shadow-2xl overflow-hidden relative">
+          <div className="w-full bg-white rounded-2xl overflow-hidden flex flex-col items-center">
             {/* The Google Form iframe provided by the user */}
             <iframe
               key={iframeKey}
               src={AGENT_BUILDER_INTENSIVE.googleFormUrl}
               width="100%"
-              height="4000"
+              height="1580"
               frameBorder="0"
               marginHeight={0}
               marginWidth={0}
-              scrolling="no"
+              scrolling="auto"
               title={`Build Minds - ${UPCOMING_COHORT.startDateFormatted} Registration Form`}
-              className="w-full max-w-2xl border-0"
-              style={{ height: '4000px', minHeight: '4000px' }}
+              className="w-full max-w-2xl border-0 h-[1900px] sm:h-[1750px] md:h-[1580px]"
               onLoad={() => setIsLoading(false)}
             >
               Loading application form…

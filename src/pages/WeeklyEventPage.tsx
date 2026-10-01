@@ -99,10 +99,12 @@ END:VCALENDAR`;
         <div className="flex items-center justify-between">
           <button
             onClick={() => onNavigate('home')}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-4 py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
+            aria-label="Back to Home"
+            title="Back to Home"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-3 py-2 sm:px-4 sm:py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#D98A1E]" />
-            <span>Back to Home</span>
+            <span className="hidden sm:inline">Back to Home</span>
           </button>
 
           <span className="text-xs font-mono text-[#D98A1E] font-bold bg-[#D98A1E]/10 px-3 py-1 rounded-full border border-[#D98A1E]/20">

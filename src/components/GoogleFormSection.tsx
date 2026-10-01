@@ -106,19 +106,18 @@ export const GoogleFormSection: React.FC<GoogleFormSectionProps> = ({ onNavigate
           </div>
 
           {/* Embedded Google Form Iframe Container */}
-          <div className="p-3 sm:p-6 bg-white flex justify-center">
+          <div className="p-2 sm:p-6 bg-white flex justify-center rounded-2xl overflow-hidden">
             <iframe
               key={iframeKey}
               src={AGENT_BUILDER_INTENSIVE.googleFormUrl}
               width="100%"
-              height="4000"
+              height="1580"
               frameBorder="0"
               marginHeight={0}
               marginWidth={0}
-              scrolling="no"
+              scrolling="auto"
               title={`Build Minds Registration Form ${AGENT_BUILDER_INTENSIVE.startDate}`}
-              className="w-full max-w-2xl border-0"
-              style={{ height: '4000px', minHeight: '4000px' }}
+              className="w-full max-w-2xl border-0 h-[1900px] sm:h-[1750px] md:h-[1580px]"
             >
               Loading application form…
             </iframe>
