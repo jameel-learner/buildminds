@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ExternalLink, RefreshCw, CheckCircle2, ShieldCheck, Sparkles, Copy, Mail, ArrowRight } from 'lucide-react';
-import { AGENT_BUILDER_INTENSIVE, BRAND } from '../data/buildMindsData';
+import { AGENT_BUILDER_INTENSIVE, BRAND, UPCOMING_COHORT } from '../data/buildMindsData';
 import { PageRoute } from '../types';
 
 interface RegisterPageProps {
@@ -49,7 +49,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
           <div className="relative z-10 space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B131B] border border-[#25374C] text-xs font-semibold text-[#D98A1E]">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>COHORT ADMISSIONS • 21 SEP 2026</span>
+              <span>COHORT ADMISSIONS • {UPCOMING_COHORT.startDateFormatted.toUpperCase()} ({UPCOMING_COHORT.cohortLabel.toUpperCase()})</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
@@ -57,14 +57,14 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
             </h1>
 
             <p className="text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed">
-              Complete the admissions application below for the upcoming <strong>21 Sep 2026</strong> cohort. Each application is reviewed directly by our engineering mentors, <strong>Mohammed Jameel</strong> and <strong>Naveed KS</strong>.
+              Complete the admissions application below for the upcoming <strong>{UPCOMING_COHORT.startDateFormatted}</strong> ({UPCOMING_COHORT.cohortLabel}) cohort. Each application is reviewed directly by our engineering mentors, <strong>Mohammed Jameel</strong> and <strong>Naveed KS</strong>.
             </p>
 
             {/* Key Batch Parameters & Discount Banner */}
             <div className="pt-2 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
               <div className="p-3 rounded-xl bg-[#0B131B] border border-[#25374C]">
                 <div className="text-slate-400">Cohort Commences</div>
-                <div className="text-white font-bold text-sm mt-0.5">21 Sep 2026</div>
+                <div className="text-white font-bold text-sm mt-0.5">{UPCOMING_COHORT.startDateFormatted}</div>
               </div>
               <div className="p-3 rounded-xl bg-[#0B131B] border border-[#25374C]">
                 <div className="text-slate-400">Batch Cap</div>
@@ -149,7 +149,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
               marginHeight={0}
               marginWidth={0}
               scrolling="no"
-              title="Build Minds - 21 Sep 2026 Registration Form"
+              title={`Build Minds - ${UPCOMING_COHORT.startDateFormatted} Registration Form`}
               className="w-full max-w-2xl border-0"
               style={{ height: '4000px', minHeight: '4000px' }}
               onLoad={() => setIsLoading(false)}
@@ -160,7 +160,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
 
           <div className="mt-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#D98A1E]" />
-            <span>Secure official Google Form for Build Minds 21 Sep 2026 Batch Admissions.</span>
+            <span>Secure official Google Form for Build Minds {UPCOMING_COHORT.startDateFormatted} ({UPCOMING_COHORT.cohortLabel}) Admissions.</span>
           </div>
         </div>
 

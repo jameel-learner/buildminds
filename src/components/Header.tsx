@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BuildMindsLogo } from './BuildMindsLogo';
 import { Calendar, FileText, Menu, X, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 import { PageRoute } from '../types';
+import { UPCOMING_COHORT } from '../data/buildMindsData';
 import logoImg from '../assets/images/direct_white_logo_only.png';
 import heroBgImg from '../assets/images/outskill_hero_bg_1789149819245.jpg';
 
@@ -126,10 +127,10 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
             id="nav-apply-form-btn"
             onClick={() => handleNav('register')}
             className="flex items-center gap-1.5 text-xs font-bold text-white bg-[#D98A1E] hover:bg-[#e7992c] px-4 py-2.5 rounded-xl transition shadow-md shadow-[#D98A1E]/20 cursor-pointer"
-            title="Open Registration Page for 21 Sep 2026 Intensive"
+            title={`Open Registration Page for ${UPCOMING_COHORT.startDateFormatted} Intensive`}
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>Apply 21 Sep Form</span>
+            <span>Apply {UPCOMING_COHORT.shortDate} Form</span>
           </button>
         </div>
 
@@ -168,14 +169,14 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
           >
             <span>Build Your First Agent — Live</span>
             <span className="text-xs bg-[#D98A1E]/20 text-[#D98A1E] px-2 py-0.5 rounded font-mono font-bold">
-              Weekly Event
+              Saturday Masterclass
             </span>
           </button>
           <button
             onClick={() => handleNav('intensive')}
             className="w-full text-left py-2.5 text-slate-200 hover:text-[#D98A1E] font-medium"
           >
-            The Agent Builder Intensive (21 Sep 2026)
+            The Agent Builder Intensive ({UPCOMING_COHORT.startDateFormatted})
           </button>
           <button
             onClick={() => handleNav('curriculum')}
@@ -201,7 +202,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
               className="w-full py-3 bg-[#D98A1E] text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-[#D98A1E]/20"
             >
               <FileText className="w-4 h-4" />
-              <span>Fill 21 Sep Registration Form</span>
+              <span>Fill {UPCOMING_COHORT.shortDate} Registration Form</span>
             </button>
           </div>
         </div>

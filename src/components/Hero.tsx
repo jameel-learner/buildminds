@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, Calendar, Clock, Star, Users, ShieldCheck, FileSpreadsheet, Bot, Cpu, Sparkles } from 'lucide-react';
 import { PageRoute } from '../types';
-import { WEEKLY_EVENT, AGENT_BUILDER_INTENSIVE, BRAND } from '../data/buildMindsData';
+import { WEEKLY_EVENT, AGENT_BUILDER_INTENSIVE, BRAND, UPCOMING_COHORT } from '../data/buildMindsData';
 import heroBgImg from '../assets/images/outskill_hero_bg_1789149819245.jpg';
 
 interface HeroProps {
@@ -34,7 +34,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           <span className="flex h-2 w-2 rounded-full bg-[#D98A1E] animate-ping" />
           <span className="font-bold text-[#D98A1E] uppercase tracking-wider">{BRAND.tagline}</span>
           <span className="text-slate-500">|</span>
-          <span className="text-slate-300">Upcoming Intensive: 21 Sep 2026</span>
+          <span className="text-slate-300">Next Intensive: {UPCOMING_COHORT.startDateFormatted} ({UPCOMING_COHORT.cohortLabel})</span>
           <button
             id="hero-banner-register-btn"
             onClick={() => onNavigate('register')}
@@ -78,7 +78,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                   Weekly Event
                 </div>
                 <div className="text-base font-bold text-white mt-0.5">
-                  Every Sunday
+                  Every Saturday
                 </div>
               </div>
 
@@ -87,16 +87,16 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               <div>
                 <div className="text-xs uppercase tracking-wider text-slate-400 flex items-center gap-1 font-semibold">
                   <Clock className="w-3.5 h-3.5 text-[#D98A1E]" />
-                  2 Live Sessions
+                  1 Live Session
                 </div>
                 <div className="text-base font-bold text-white mt-0.5">
-                  10 AM & 3 PM IST
+                  11 AM – 2 PM IST
                 </div>
               </div>
             </div>
           </div>
 
-          {/* The Agent Builder Intensive (21 Sep 2026) Callout Card */}
+          {/* The Agent Builder Intensive Callout Card */}
           <div className="p-4 sm:p-5 rounded-2xl bg-[#162332]/90 border border-[#25374C] backdrop-blur-md max-w-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <div className="p-2.5 rounded-xl bg-[#D98A1E]/15 border border-[#D98A1E]/30 text-[#D98A1E]">
@@ -106,7 +106,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
                   <span>The Agent Builder Intensive</span>
                   <span className="text-[10px] bg-[#D98A1E]/20 text-[#D98A1E] border border-[#D98A1E]/40 px-2 py-0.5 rounded-full font-semibold">
-                    21 Sep 2026 Batch
+                    {UPCOMING_COHORT.badgeText}
                   </span>
                   <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
                     Launch Price: ₹6,000 INR

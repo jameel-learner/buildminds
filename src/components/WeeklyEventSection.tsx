@@ -1,6 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, Sparkles, CheckCircle2, ArrowRight, Download, Users, Video, BookOpen, Layers } from 'lucide-react';
-import { WEEKLY_EVENT, AGENT_BUILDER_INTENSIVE, MENTORS } from '../data/buildMindsData';
+import React, { useState } from 'react';
+import {
+  Calendar,
+  Clock,
+  Sparkles,
+  CheckCircle2,
+  ArrowRight,
+  Download,
+  Users,
+  Video,
+  Code2,
+  Layers,
+  Terminal,
+  ShieldCheck,
+  Bot
+} from 'lucide-react';
+import { WEEKLY_EVENT, AGENT_BUILDER_INTENSIVE, UPCOMING_COHORT, UPCOMING_SATURDAY } from '../data/buildMindsData';
 import { PageRoute } from '../types';
 import confetti from 'canvas-confetti';
 
@@ -9,7 +23,6 @@ interface WeeklyEventSectionProps {
 }
 
 export const WeeklyEventSection: React.FC<WeeklyEventSectionProps> = ({ onNavigate }) => {
-  const [activeTab, setActiveTab] = useState<'session1' | 'session2'>('session1');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [role, setRole] = useState('');
@@ -20,11 +33,11 @@ export const WeeklyEventSection: React.FC<WeeklyEventSectionProps> = ({ onNaviga
     e.preventDefault();
     if (!email || !name) return;
 
-    const randomTicket = `BM-FREE-${Math.floor(100000 + Math.random() * 900000)}`;
+    const randomTicket = `BM-SAT-${Math.floor(100000 + Math.random() * 900000)}`;
     setTicketNumber(randomTicket);
     setIsRegistered(true);
 
-    const waMsg = `Hello Build Minds, I would like to claim my Free Sunday Pass for the Live Agentic AI Workshop.
+    const waMsg = `Hello Build Minds, I would like to claim my Free Saturday Pass for the Live Agentic AI Masterclass (11:00 AM – 2:00 PM IST).
 
 Details:
 • Name: ${name}
@@ -37,8 +50,8 @@ Details:
 
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 85,
+        spread: 75,
         origin: { y: 0.6 },
         colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
       });
@@ -48,11 +61,11 @@ Details:
   const handleDownloadCalendar = () => {
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Build Minds//Free Sunday Agent Workshop//EN
+PRODID:-//Build Minds//Free Saturday Agent Masterclass//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
-SUMMARY:Build Minds: Free Sunday Live Agentic AI Workshop
-DESCRIPTION:Session 1 (10:00 AM-2:15 PM IST): LLMs, Prompt Engineering, Claude Code & Cursor. Lunch Break: 2:15-3:00 PM IST. Session 2 (3:00-6:00 PM IST): CrewAI & Agentic AI Workflows with Mohammed Jameel & Naveed KS.
+SUMMARY:Build Minds: Free Saturday Live Agentic AI Masterclass (11:00 AM - 2:00 PM IST)
+DESCRIPTION:Build Your First Agent — Live. Master prompt engineering, AI-led coding with Cursor & Claude Code, tool-use, and CrewAI multi-agent workflows with Mohammed Jameel & Naveed KS.
 STATUS:CONFIRMED
 LOCATION:Build Minds Live Broadcast Studio (Zoom)
 END:VEVENT
@@ -61,11 +74,13 @@ END:VCALENDAR`;
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', 'BuildMinds-Free-Sunday-Workshop.ics');
+    link.setAttribute('download', 'BuildMinds-Free-Saturday-Masterclass.ics');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
+
+  const session = WEEKLY_EVENT.singleSession;
 
   return (
     <section id="weekly-event" className="py-20 bg-[#0E1722] border-t border-b border-[#25374C] relative overflow-hidden">
@@ -78,7 +93,7 @@ END:VCALENDAR`;
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#162332] border border-[#25374C] text-xs font-semibold text-[#D98A1E] mb-4">
             <span className="flex h-2 w-2 rounded-full bg-[#D98A1E] animate-ping" />
-            <span>FREE SUNDAY LIVE WORKSHOP • 2 SESSIONS</span>
+            <span>FREE SATURDAY LIVE MASTERCLASS • 11:00 AM – 2:00 PM IST</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight mb-4">
@@ -86,138 +101,122 @@ END:VCALENDAR`;
           </h2>
 
           <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-            {WEEKLY_EVENT.tagline} Mentored live by <strong>Mohammed Jameel</strong> and <strong>Naveed KS</strong>.
+            {WEEKLY_EVENT.tagline} Guided live by veteran engineering leaders <strong>Mohammed Jameel</strong> and <strong>Naveed KS</strong>.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Sunday 2-Session Schedule Tabs & Details (7 cols) */}
+          {/* Left Column: Saturday Single Masterclass 11:00 AM – 2:00 PM Details (7 cols) */}
           <div className="lg:col-span-7 space-y-6">
-            {/* Session Selector Tabs */}
-            <div className="flex rounded-2xl bg-[#162332] border border-[#25374C] p-1.5">
-              <button
-                onClick={() => setActiveTab('session1')}
-                className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-                  activeTab === 'session1'
-                    ? 'bg-[#D98A1E] text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <Clock className="w-4 h-4" />
-                <span>Session 1: Morning (10:00 AM – 2:15 PM IST)</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('session2')}
-                className={`flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 cursor-pointer ${
-                  activeTab === 'session2'
-                    ? 'bg-[#D98A1E] text-white shadow-md'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <Clock className="w-4 h-4" />
-                <span>Session 2: Afternoon (3:00 PM – 6:00 PM IST)</span>
-              </button>
-            </div>
-
-            {/* Session 1 Details Card */}
-            {activeTab === 'session1' && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-[#162332] border border-[#25374C] shadow-xl space-y-5 animate-in fade-in">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#25374C] pb-4">
-                  <div>
-                    <span className="text-xs font-mono font-bold text-[#D98A1E] bg-[#D98A1E]/10 px-2.5 py-1 rounded">
-                      Sunday Morning • 10:00 AM – 2:15 PM IST
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-white mt-2">
-                      {WEEKLY_EVENT.days[0].workshopName}
-                    </h3>
-                  </div>
-                  <div className="text-xs font-mono text-slate-300 bg-[#0B131B] border border-[#25374C] px-3 py-1.5 rounded-lg">
-                    Tools: <span className="text-[#D98A1E] font-bold">{WEEKLY_EVENT.days[0].toolsUsed}</span>
-                  </div>
-                </div>
-
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {WEEKLY_EVENT.days[0].description}
-                </p>
-
+            {/* Masterclass Overview Card */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-[#162332] border border-[#25374C] shadow-2xl space-y-6">
+              {/* Header inside card */}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#25374C] pb-4">
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
-                    Topics Covered:
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold text-[#D98A1E] bg-[#D98A1E]/10 border border-[#D98A1E]/20 px-2.5 py-1 rounded-md">
+                      Every Saturday • 11:00 AM – 2:00 PM IST
+                    </span>
+                    <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
+                      Single 3-Hour Intensive
+                    </span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {WEEKLY_EVENT.days[0].topics.map((topic, tIdx) => (
-                      <div
-                        key={tIdx}
-                        className="p-2.5 rounded-xl bg-[#0B131B] border border-[#25374C] flex items-center gap-2 text-xs text-slate-200"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D98A1E] shrink-0" />
-                        <span>{topic}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Lunch Break Note */}
-                <div className="p-3 rounded-2xl bg-[#0B131B] border border-[#25374C] text-center text-xs text-slate-400 font-mono">
-                  🥪 Post-Session Lunch Break: 2:15 PM – 3:00 PM IST (Reconvene at 3:00 PM)
+                  <h3 className="text-xl sm:text-2xl font-black text-white mt-2 leading-snug">
+                    {session.workshopName}
+                  </h3>
                 </div>
               </div>
-            )}
 
-            {/* Session 2 Details Card */}
-            {activeTab === 'session2' && (
-              <div className="space-y-4 animate-in fade-in">
-                {/* Lunch Break Bar */}
-                <div className="p-3 rounded-2xl bg-[#0B131B] border border-[#25374C] text-center text-xs text-slate-400 font-mono">
-                  🥪 Lunch Break: 2:15 PM – 3:00 PM IST • Afternoon Session Begins at 3:00 PM IST
+              {/* Description */}
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                {session.description}
+              </p>
+
+              {/* Tools Stack Strip */}
+              <div className="p-3.5 rounded-2xl bg-[#0B131B] border border-[#25374C] flex flex-wrap items-center justify-between gap-2 text-xs">
+                <span className="text-slate-400 font-semibold flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5 text-[#D98A1E]" />
+                  <span>Hands-on Tech Stack:</span>
+                </span>
+                <span className="font-mono text-[#D98A1E] font-bold">
+                  {session.toolsUsed}
+                </span>
+              </div>
+
+              {/* 4 Phased Milestones Breakdown */}
+              <div className="space-y-3">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-[#D98A1E]" />
+                  <span>3-Hour Masterclass Agenda (11:00 AM – 2:00 PM IST):</span>
                 </div>
 
-                {/* Afternoon Session */}
-                <div className="p-6 sm:p-7 rounded-3xl bg-[#162332] border border-[#25374C] shadow-xl space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#25374C] pb-3">
-                    <div>
-                      <span className="text-xs font-mono font-bold text-[#D98A1E] bg-[#D98A1E]/10 px-2.5 py-1 rounded">
-                        Sunday Afternoon • 3:00 PM – 6:00 PM IST
-                      </span>
-                      <h3 className="text-lg font-bold text-white mt-2">
-                        {WEEKLY_EVENT.days[1].workshopName}
-                      </h3>
-                    </div>
-                    <div className="text-xs font-mono text-slate-300 bg-[#0B131B] border border-[#25374C] px-3 py-1.5 rounded-lg">
-                      Tools: <span className="text-[#D98A1E] font-bold">{WEEKLY_EVENT.days[1].toolsUsed}</span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    {WEEKLY_EVENT.days[1].description}
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {WEEKLY_EVENT.days[1].topics.map((topic, tIdx) => (
-                      <div
-                        key={tIdx}
-                        className="p-2 rounded-xl bg-[#0B131B] border border-[#25374C] flex items-center gap-2 text-xs text-slate-200"
-                      >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#D98A1E] shrink-0" />
-                        <span>{topic}</span>
+                <div className="grid grid-cols-1 gap-2.5">
+                  {session.phases.map((phase, pIdx) => (
+                    <div
+                      key={pIdx}
+                      className="p-3.5 rounded-2xl bg-[#0B131B] border border-[#25374C] hover:border-[#D98A1E]/40 transition space-y-1"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-bold text-white flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-full bg-[#D98A1E]/20 text-[#D98A1E] text-[10px] font-mono font-bold flex items-center justify-center shrink-0">
+                            {pIdx + 1}
+                          </span>
+                          <span>{phase.title}</span>
+                        </span>
+                        <span className="text-[11px] font-mono text-[#D98A1E] font-semibold bg-[#162332] px-2 py-0.5 rounded shrink-0">
+                          {phase.time}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <p className="text-xs text-slate-400 pl-7 leading-relaxed">
+                        {phase.focus}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
-            )}
+
+              {/* Key Takeaways & Audience Pullers */}
+              <div className="space-y-3 pt-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#D98A1E]" />
+                  <span>High-Impact Topics & Practical Takeaways:</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {session.topics.map((topic, tIdx) => (
+                    <div
+                      key={tIdx}
+                      className="p-2.5 rounded-xl bg-[#0B131B] border border-[#25374C] flex items-center gap-2 text-xs text-slate-200"
+                    >
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#D98A1E] shrink-0" />
+                      <span className="truncate">{topic}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mentors Ribbon */}
+              <div className="p-3.5 rounded-2xl bg-[#0B131B]/70 border border-[#25374C] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
+                <div className="text-slate-300">
+                  <span className="text-slate-400">Co-Hosted Live by: </span>
+                  <strong className="text-white">Mohammed Jameel</strong> (24+ yrs) & <strong className="text-white">Naveed KS</strong> (Ex-interface.ai)
+                </div>
+                <span className="text-[11px] font-mono text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded">
+                  Live Coding Sandbox Included
+                </span>
+              </div>
+            </div>
 
             {/* In-page navigation to full event details */}
             <div className="p-4 rounded-2xl bg-[#162332] border border-[#25374C] flex items-center justify-between text-xs">
               <span className="text-slate-300">
-                Want to read the full Sunday syllabus and code repositories?
+                Looking for the full Saturday syllabus, live links, and prerequisites?
               </span>
               <button
                 id="weekly-event-view-details-btn"
                 onClick={() => onNavigate('weekly-event')}
                 className="font-bold text-[#D98A1E] hover:text-[#f5a623] inline-flex items-center gap-1 cursor-pointer"
               >
-                <span>View Dedicated Workshop Page</span>
+                <span>View Dedicated Saturday Page</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -238,10 +237,10 @@ END:VCALENDAR`;
 
               <div>
                 <h3 className="text-xl font-black text-white">
-                  Reserve Your Free Sunday Pass (2 Sessions)
+                  Reserve Your Free Saturday Pass
                 </h3>
                 <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                  Join both Sunday live sessions over Zoom (10:00 AM – 2:15 PM & 3:00 PM – 6:00 PM IST). Direct code access and live Q&A included.
+                  Join the single live 3-hour masterclass over Zoom (11:00 AM – 2:00 PM IST). Direct code-along repository and mentor Q&A included.
                 </p>
               </div>
 
@@ -294,7 +293,7 @@ END:VCALENDAR`;
                     id="submit-weekly-event-pass-btn"
                     className="w-full bg-[#D98A1E] hover:bg-[#e7992c] text-white font-extrabold text-sm py-3.5 rounded-xl transition shadow-lg shadow-[#D98A1E]/20 flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
-                    <span>Claim Free Sunday Pass</span>
+                    <span>Claim Free Saturday Pass</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
 
@@ -312,7 +311,7 @@ END:VCALENDAR`;
                   <div>
                     <h4 className="text-lg font-bold text-white">VIP Pass Confirmed!</h4>
                     <p className="text-xs text-slate-300 mt-1">
-                      Welcome, <strong className="text-white">{name}</strong> ({role || 'Participant'})! Details dispatched to WhatsApp (+91 8892920286). Your seat is reserved for this upcoming Sunday (10:00 AM – 6:00 PM IST).
+                      Welcome, <strong className="text-white">{name}</strong> ({role || 'Participant'})! Details dispatched to WhatsApp (+91 8892920286). Your seat is reserved for this upcoming Saturday (11:00 AM – 2:00 PM IST).
                     </p>
                   </div>
 
@@ -325,19 +324,19 @@ END:VCALENDAR`;
                     className="w-full bg-[#182635] hover:bg-[#22354a] text-slate-200 hover:text-white border border-[#25374C] font-semibold text-xs py-2.5 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Download className="w-4 h-4 text-[#D98A1E]" />
-                    <span>Add to Calendar (.ics)</span>
+                    <span>Add Saturday Event to Calendar (.ics)</span>
                   </button>
                 </div>
               )}
 
-              {/* Pathway to 21 Sep Agent Builder Intensive with Launch Price Callout */}
+              {/* Pathway to Dynamic Agent Builder Intensive with Launch Price Callout */}
               <div className="mt-4 pt-5 border-t border-[#25374C] space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-white">Full 14-Day Intensive:</span>
+                  <span className="font-semibold text-white">Full 14-Day Intensive ({UPCOMING_COHORT.cohortLabel}):</span>
                   <span className="text-emerald-400 font-bold font-mono">₹6,000 INR (Save ₹89,000)</span>
                 </div>
                 <p className="text-[11px] text-slate-400">
-                  Ready for 6 comprehensive engineering sprints + capstone hackathon starting 21 Sep 2026?
+                  Ready for 6 comprehensive engineering sprints + capstone hackathon starting {UPCOMING_COHORT.startDateFormatted}?
                 </p>
                 <button
                   id="weekly-event-to-intensive-btn"

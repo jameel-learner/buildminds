@@ -13,7 +13,9 @@ import {
   Building2,
   TrendingDown,
   Calendar,
-  Users
+  Users,
+  MessageSquare,
+  ExternalLink
 } from 'lucide-react';
 import { COURSE_PATHS, AGENT_BUILDER_INTENSIVE, BRAND } from '../data/buildMindsData';
 import { PageRoute, CoursePath } from '../types';
@@ -34,6 +36,8 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
   const [experienceLevel, setExperienceLevel] = useState<'beginner' | 'intermediate' | 'advanced'>('intermediate');
   const [paymentMethod, setPaymentMethod] = useState<'upi' | 'card' | 'invoice'>('upi');
   const [studentId, setStudentId] = useState('');
+  const [utrNumber, setUtrNumber] = useState('');
+  const [waUrl, setWaUrl] = useState('');
 
   const launchPrice = AGENT_BUILDER_INTENSIVE.tuition.launchPrice;
   const industryRate = AGENT_BUILDER_INTENSIVE.tuition.industryRate;
@@ -41,8 +45,45 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
 
   const handleCompletePayment = (transactionRef?: string) => {
     const newId = `BM-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const finalUtr = transactionRef?.trim() || 'DIRECT-UPI';
     setStudentId(newId);
+    setUtrNumber(finalUtr);
     setStep(4);
+
+    const expMap: Record<string, string> = {
+      beginner: 'Beginner / Transitioning',
+      intermediate: 'Intermediate Engineer',
+      advanced: 'Senior / Lead Architect',
+    };
+    const expLabel = expMap[experienceLevel] || experienceLevel;
+
+    // Compile comprehensive enrollment payload for Mohammed Jameel (WhatsApp: 9886558433)
+    const waMsg = `*Build Minds — New Enrollment & Payment Confirmation* 🎓
+
+Hello Mohammed Jameel, I have completed the tuition payment for The Agent Builder Intensive.
+
+*Fellow / Student Details:*
+• *Fellow ID:* ${newId}
+• *Full Legal Name:* ${fullName}
+• *Email Address:* ${email}
+• *Phone / WhatsApp:* ${phone.trim() || 'Not specified'}
+• *Technical Proficiency:* ${expLabel}
+
+*Program & Track Details:*
+• *Program:* The Agent Builder Intensive (14 Days • 6 Sprints)
+• *Track:* ${activePath.title}
+• *Cohort Batch:* ${AGENT_BUILDER_INTENSIVE.startDate} (${AGENT_BUILDER_INTENSIVE.cohortLabel})
+• *Lead Mentors:* Mohammed Jameel & Naveed KS
+
+*Payment Verification Details:*
+• *Tuition Amount Paid:* ₹${launchPrice.toLocaleString()} INR
+• *Payment Mode:* Direct UPI QR / Transfer (jameel.learner@oksbi)
+• *UPI Reference / UTR Number:* ${finalUtr}
+• *Status:* Payment Submitted for Seat Confirmation`;
+
+    const whatsappUrl = `https://wa.me/919886558433?text=${encodeURIComponent(waMsg)}`;
+    setWaUrl(whatsappUrl);
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
 
     try {
       confetti({
@@ -113,7 +154,7 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
                   Choose Your Cohort Track
                 </h2>
                 <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                  Flagship 14-Day Intensive (6 Sprints + Python Basecamp + Hackathon) starting <strong>21 Sep 2026</strong>.
+                  Flagship 14-Day Intensive (6 Sprints + Python Basecamp + Hackathon) starting <strong>{AGENT_BUILDER_INTENSIVE.startDate}</strong>.
                 </p>
               </div>
 
@@ -499,7 +540,7 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
                 Welcome to Build Minds, {fullName || 'Fellow'}!
               </h2>
               <p className="text-sm text-slate-300 mt-2 max-w-md mx-auto leading-relaxed">
-                Your seat in <strong>{activePath.title}</strong> for the <strong>21 Sep 2026</strong> fellowship batch is locked at the special launch rate of <strong>₹{launchPrice.toLocaleString()} INR</strong>.
+                Your seat in <strong>{activePath.title}</strong> for the <strong>{AGENT_BUILDER_INTENSIVE.startDate}</strong> fellowship batch is locked at the special launch rate of <strong>₹{launchPrice.toLocaleString()} INR</strong>.
               </p>
             </div>
 
@@ -509,27 +550,63 @@ export const EnrollmentPage: React.FC<EnrollmentPageProps> = ({ onNavigate, sele
                 <span className="text-white font-mono font-bold">{studentId}</span>
               </div>
               <div className="flex justify-between">
+                <span className="text-slate-400">Track:</span>
+                <span className="text-white font-semibold">{activePath.title}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-slate-400">Cohort Start Date:</span>
-                <span className="text-white font-semibold">21 Sep 2026 (14 Days • 6 Sprints)</span>
+                <span className="text-white font-semibold">{AGENT_BUILDER_INTENSIVE.startDate} (14 Days • 6 Sprints)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Tuition Paid:</span>
                 <span className="text-emerald-400 font-mono font-bold">₹{launchPrice.toLocaleString()} INR</span>
               </div>
               <div className="flex justify-between">
+                <span className="text-slate-400">UPI Ref / UTR:</span>
+                <span className="text-[#D98A1E] font-mono font-bold">{utrNumber}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Phone / WhatsApp:</span>
+                <span className="text-white font-mono">{phone || 'Not provided'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Email Confirmation:</span>
+                <span className="text-slate-200 font-mono">{email || 'your registered email'}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-slate-400">Lead Instructors:</span>
                 <span className="text-white font-semibold">Mohammed Jameel & Naveed KS</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400">Confirmation Sent To:</span>
-                <span className="text-[#D98A1E] font-mono">{email || 'your registered email'}</span>
+            </div>
+
+            {/* WhatsApp Dispatch Notice */}
+            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 max-w-md mx-auto text-xs flex items-start gap-2.5 text-left">
+              <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5 text-emerald-400" />
+              <div>
+                <div className="font-bold text-white">Enrollment Details Sent to WhatsApp (9886558433)</div>
+                <div className="text-[11px] text-slate-300 mt-0.5">
+                  All details from previous steps along with your UTR <strong className="font-mono text-emerald-300">{utrNumber}</strong> have been compiled and sent to mentor Mohammed Jameel for fast-track verification.
+                </div>
               </div>
             </div>
 
-            <div className="pt-2 flex justify-center gap-4">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+              {waUrl && (
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-[#25D366] hover:bg-[#20ba5a] text-black font-extrabold text-xs px-6 py-3 rounded-xl transition inline-flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 cursor-pointer"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Open WhatsApp (+91 9886558433)</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+
               <button
                 onClick={() => onNavigate('home')}
-                className="bg-[#D98A1E] hover:bg-[#e7992c] text-white font-bold text-xs px-6 py-3 rounded-xl transition cursor-pointer"
+                className="w-full sm:w-auto bg-[#162332] hover:bg-[#22354a] border border-[#25374C] text-white font-bold text-xs px-6 py-3 rounded-xl transition cursor-pointer"
               >
                 Return to Build Minds Home
               </button>

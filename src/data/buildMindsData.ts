@@ -1,4 +1,23 @@
 import { CoursePath, Mentor, WeeklyEventSession } from '../types';
+import {
+  UPCOMING_COHORT,
+  IN_PROGRESS_COHORT,
+  SUBSEQUENT_COHORT,
+  UPCOMING_SATURDAY,
+  getCohortSchedule,
+  formatCohortDate,
+  formatShortDate,
+} from './scheduleUtils';
+
+export {
+  UPCOMING_COHORT,
+  IN_PROGRESS_COHORT,
+  SUBSEQUENT_COHORT,
+  UPCOMING_SATURDAY,
+  getCohortSchedule,
+  formatCohortDate,
+  formatShortDate,
+};
 
 export const BRAND = {
   name: 'Build Minds',
@@ -70,77 +89,103 @@ export const MENTORS: Mentor[] = [
   }
 ];
 
-// Free Offering: Live Comprehensive Sunday Workshop (2 Sessions)
+// Free Offering: Live Comprehensive Saturday Masterclass (1 Unified Session, 11:00 AM – 2:00 PM IST)
 export const WEEKLY_EVENT = {
   title: 'Build Your First Agent — Live',
-  subHeading: 'Free Live Agentic AI Workshop • Every Sunday',
-  frequency: 'Every Sunday • 2 Live Sessions (10:00 AM – 6:00 PM IST)',
-  nextDate: 'Upcoming Sunday • 10:00 AM – 6:00 PM IST',
-  tagline: 'Master LLMs, Prompt Engineering, Claude Code, Cursor, and CrewAI multi-agent workflows in a free live Sunday workshop.',
+  subHeading: 'Free Live Agentic AI Masterclass • Every Saturday',
+  frequency: 'Every Saturday • 1 Live Masterclass (11:00 AM – 2:00 PM IST)',
+  timeSlot: '11:00 AM – 2:00 PM IST',
+  day: 'Saturday',
+  nextDate: `Upcoming Saturday (${UPCOMING_SATURDAY.formatted}) • 11:00 AM – 2:00 PM IST`,
+  tagline:
+    'Master prompt engineering, AI-led coding with Cursor & Claude Code, tool-use, and CrewAI multi-agent workflows in a free 3-hour live Saturday masterclass.',
   seatsRemaining: 24,
-  totalRegistered: 6840,
+  totalRegistered: 7420,
+  singleSession: {
+    dayLabel: 'Saturday Live Masterclass',
+    timeSlot: '11:00 AM – 2:00 PM IST',
+    workshopName:
+      'Build Your First Agent Live: From Cursor & Claude Code to Autonomous Multi-Agent Workflows',
+    toolsUsed: 'Cursor, Claude Code, CrewAI, LangChain & OpenAI APIs',
+    speakers: 'Mohammed Jameel & Naveed KS',
+    speakerRole: 'Founding Member & AI Native Engineer | Engineering & QE Leader (Ex-interface.ai)',
+    description:
+      'A hands-on, high-impact 3-hour live masterclass designed to take engineers and builders from LLM prompt engineering directly into shipping autonomous multi-agent systems. Learn how to steer AI code generation with Cursor & Claude Code, integrate external APIs, build self-directing agents with tool-use, and orchestrate collaborative multi-agent teams with CrewAI and LangChain. Mentored live by veteran engineering leaders who scaled agentic systems to millions.',
+    topics: [
+      'AI-Led Coding with Cursor & Claude Code',
+      'Structured Prompt Engineering & Function Calling',
+      'Hands-On Live Build: Your First Autonomous Agent',
+      'Wiring Agents to Real APIs & Tools',
+      'Multi-Agent Collaboration with CrewAI & LangChain',
+      'High-Impact Real-World Agentic AI Use Cases',
+      'Production Testing, Evals & Guardrails',
+      'Live Architecture Defense & Mentor Q&A'
+    ],
+    phases: [
+      {
+        time: '11:00 AM – 11:45 AM',
+        title: 'Phase 1: AI-Led Coding & Structured Prompt Engineering',
+        focus: 'Cursor & Claude Code developer workflows, structured XML/JSON prompt schemas, and OpenAI GPT-4o API integration.'
+      },
+      {
+        time: '11:45 AM – 12:45 PM',
+        title: 'Phase 2: Live Code-Along — Build Your First Autonomous Agent',
+        focus: 'Hands-on build: implementing agent decision loops, function calling, tool-use, and executing live external API requests.'
+      },
+      {
+        time: '12:45 PM – 01:30 PM',
+        title: 'Phase 3: Multi-Agent Swarms with CrewAI & LangChain',
+        focus: 'Live multi-agent demo: orchestrating specialized agents (Researcher, Coder, Reviewer) collaborating to solve complex enterprise tasks.'
+      },
+      {
+        time: '01:30 PM – 02:00 PM',
+        title: 'Phase 4: Enterprise Use Cases, Evals & Live Mentor Q&A',
+        focus: 'Real-world business integration, non-deterministic evals, code repository access, and direct 1:1 Q&A with Jameel & Naveed.'
+      }
+    ],
+    takeaways: [
+      'Build and run your own autonomous agent with tool-calling capabilities in under 3 hours',
+      'Master professional AI-led developer workflows with Cursor and Claude Code',
+      'Orchestrate multi-agent teams using the CrewAI framework for automated task execution',
+      'Receive full GitHub starter repositories, prompt templates, and sandbox keys',
+      'Direct live architectural guidance and live Q&A with Mohammed Jameel & Naveed KS'
+    ]
+  },
   days: [
     {
-      dayLabel: 'Session 1 — Sunday Morning',
-      timeSlot: '10:00 AM – 2:15 PM IST',
-      workshopName: 'Introduction to LLMs, Prompt Engineering, AI Led Coding & Building AI Agents',
-      toolsUsed: 'Claude Code & Cursor',
+      dayLabel: 'Saturday Live Masterclass',
+      timeSlot: '11:00 AM – 2:00 PM IST',
+      workshopName:
+        'Build Your First Agent Live: From Cursor & Claude Code to Autonomous Multi-Agent Workflows',
+      toolsUsed: 'Cursor, Claude Code, CrewAI, LangChain & OpenAI APIs',
       topics: [
-        'Large Language Models (LLMs)',
-        'Prompt Engineering & Structured Prompts',
-        'AI-Led Coding Workflows',
-        'Generative AI Workflows',
-        'OpenAI APIs (GPT-4) Integration',
-        'Building Intelligent AI Agents',
-        'Code Generation with LLMs',
-        'Real-World AI Applications'
+        'AI-Led Coding with Cursor & Claude Code',
+        'Structured Prompt Engineering & Function Calling',
+        'Hands-On Live Build: Your First Autonomous Agent',
+        'Wiring Agents to Real APIs & Tools',
+        'Multi-Agent Collaboration with CrewAI & LangChain',
+        'High-Impact Real-World Agentic AI Use Cases',
+        'Production Testing, Evals & Guardrails',
+        'Live Architecture Defense & Mentor Q&A'
       ],
       description:
-        'A hands-on introduction to the power of Large Language Models (LLMs) and how engineers can leverage them for AI-led coding and automation. Explore how models like GPT-4 work, understand principles of prompt engineering, and learn how to guide AI to generate optimized code and intelligent responses. Integrate OpenAI APIs into your projects, automate coding workflows, and build your own AI-powered agents.',
+        'A hands-on, high-impact 3-hour live masterclass designed to take engineers and builders from LLM prompt engineering directly into shipping autonomous multi-agent systems. Learn how to steer AI code generation with Cursor & Claude Code, integrate external APIs, build self-directing agents with tool-use, and orchestrate collaborative multi-agent teams with CrewAI and LangChain. Mentored live by veteran engineering leaders who scaled agentic systems to millions.',
       speaker: 'Mohammed Jameel & Naveed KS',
-      speakerRole: 'AI Native Engineer & Engineering Leader'
-    },
-    {
-      dayLabel: 'Session 2 — Sunday Afternoon',
-      timeSlot: '3:00 PM – 6:00 PM IST',
-      workshopName: 'Agentic AI Workflow Demo & Agentic AI Usecases',
-      toolsUsed: 'CrewAI, LangChain',
-      topics: [
-        'Agentic AI Workflows',
-        'Multi-Agent Systems',
-        'CrewAI Framework',
-        'AI Orchestration',
-        'Task Automation with Agents',
-        'Real-World Agentic AI Use Cases',
-        'Integrating Agents into Business Processes'
-      ],
-      description:
-        'Deep dive into the emerging world of Agentic AI — where autonomous AI agents collaborate to perform complex tasks and streamline workflows. Through a live demo, explore how Agentic AI systems are designed, deployed, and connected to real-world tools and APIs. Discover practical use cases across industries: from automating business operations to building intelligent assistants.',
-      speaker: 'Naveed KS & Mohammed Jameel',
-      speakerRole: 'Engineering & QE Leader (Ex-interface.ai)'
+      speakerRole: 'AI Native Engineer & Engineering Leader (Ex-interface.ai)'
     }
   ],
   agenda: [
     {
-      time: 'Sunday: 10:00 AM – 2:15 PM IST',
-      title: 'Introduction to LLMs, Prompt Engineering, AI Led Coding & Building AI Agents',
-      speaker: 'Mohammed Jameel',
-      speakerRole: 'Founding Member & AI Native Engineer',
+      time: 'Saturday: 11:00 AM – 2:00 PM IST',
+      title: 'Build Your First Agent Live (Cursor, Claude Code & CrewAI Multi-Agent Swarms)',
+      speaker: 'Mohammed Jameel & Naveed KS',
+      speakerRole: 'Founding Member & AI Native Engineer | Engineering & QE Leader (Ex-interface.ai)',
       takeaways: [
-        'Hands-on prompt engineering with Claude Code & Cursor',
-        'Integrating OpenAI APIs (GPT-4) and generating production code',
-        'Automating developer workflows and building your first intelligent agent'
-      ]
-    },
-    {
-      time: 'Sunday: 3:00 PM – 6:00 PM IST',
-      title: 'Agentic AI Workflow Demo & Agentic AI Usecases (CrewAI & LangChain)',
-      speaker: 'Naveed KS',
-      speakerRole: 'Engineering & QE Leader (Ex-interface.ai)',
-      takeaways: [
-        'Live demo of multi-agent collaboration with CrewAI & LangChain',
-        'Autonomous task automation and real-world business integration',
-        'Connecting agentic systems to live APIs and operational tools'
+        'Build and run your own autonomous agent with tool-calling capabilities in under 3 hours',
+        'Master professional AI-led developer workflows with Cursor and Claude Code',
+        'Orchestrate multi-agent teams using the CrewAI framework for automated task execution',
+        'Receive full GitHub starter repositories, prompt templates, and sandbox keys',
+        'Direct live architectural guidance and live Q&A with Mohammed Jameel & Naveed KS'
       ]
     }
   ] as WeeklyEventSession[]
@@ -149,9 +194,12 @@ export const WEEKLY_EVENT = {
 // Paid Offering: The Agent Builder Intensive (14 Days, 6 Sprints + Basecamp + Hackathon)
 export const AGENT_BUILDER_INTENSIVE = {
   title: 'The Agent Builder Intensive',
-  badge: 'Flagship 14-Day Cohort • 6 Sprints',
+  badge: `Flagship 14-Day Cohort • ${UPCOMING_COHORT.cohortLabel}`,
   tagline: '14 Days, 6 Sprints: From Foundation to Production-Grade Autonomous Multi-Agent Systems',
-  startDate: '21 Sep 2026',
+  startDate: UPCOMING_COHORT.startDateFormatted, // Dynamically computed start date (cascades on the 4th Monday / after 3 Mondays)
+  cohortNumber: UPCOMING_COHORT.cohortNumber,
+  cohortLabel: UPCOMING_COHORT.cohortLabel,
+  shortDate: UPCOMING_COHORT.shortDate,
   duration: '14 Days (6 Sprints + Python Basecamp + Hackathon) + 6 Months Mentor Access',
   format: 'Live Immersive Sprints (7:00 PM – 11:00 PM IST) + Weekend Capstone Labs + 1:1 Defenses',
   batchSize: 'Strictly Capped at 50 Fellows',

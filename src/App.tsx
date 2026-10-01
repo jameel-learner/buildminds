@@ -12,7 +12,7 @@ import { IntensivePage } from './pages/IntensivePage';
 import { MentorsPage } from './pages/MentorsPage';
 import { EnrollmentPage } from './pages/EnrollmentPage';
 import { PageRoute, CoursePath } from './types';
-import { BRAND, AGENT_BUILDER_INTENSIVE } from './data/buildMindsData';
+import { BRAND, AGENT_BUILDER_INTENSIVE, UPCOMING_COHORT } from './data/buildMindsData';
 import { FileText, ArrowRight, Sparkles, Calendar, CheckCircle2 } from 'lucide-react';
 
 export default function App() {
@@ -28,7 +28,7 @@ export default function App() {
   useEffect(() => {
     const notifications = [
       { text: 'Aman K. from Bengaluru', subtext: 'Registered for Build Your First Agent — Live' },
-      { text: 'Elena R. from Singapore', subtext: 'Applied for The Agent Builder Intensive (21 Sep)' },
+      { text: 'Elena R. from Singapore', subtext: `Applied for The Agent Builder Intensive (${UPCOMING_COHORT.shortDate})` },
       { text: 'Karthik S. from Hyderabad', subtext: 'Booked 1:1 Office Hours with Naveed KS' },
       { text: 'David M. from San Francisco', subtext: 'Enrolled in Autonomous Engineering Track' },
     ];
@@ -67,11 +67,11 @@ export default function App() {
       <div className="bg-[#162332] border-b border-[#25374C] text-xs py-2 px-4 text-center flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
         <span className="inline-flex items-center gap-1.5 font-bold text-[#D98A1E]">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>The Agent Builder Intensive Starts 21 Sep 2026</span>
+          <span>The Agent Builder Intensive Starts {UPCOMING_COHORT.startDateFormatted}</span>
         </span>
         <span className="hidden sm:inline text-slate-500">•</span>
         <span className="text-slate-300">
-          Official Google Form applications are open for review
+          Official Google Form applications are open for {UPCOMING_COHORT.cohortLabel}
         </span>
         <button
           id="top-bar-apply-btn"
@@ -96,7 +96,7 @@ export default function App() {
             {/* Weekly Event Section (Build Your First Agent — Live) */}
             <WeeklyEventSection onNavigate={handleNavigate} />
 
-            {/* Embedded Google Form Section for 21 Sep 2026 Cohort */}
+            {/* Embedded Google Form Section for Upcoming Cohort */}
             <GoogleFormSection onNavigate={handleNavigate} />
 
             {/* Specialized Industry Tracks */}
@@ -114,7 +114,7 @@ export default function App() {
                 <div className="p-8 sm:p-10 rounded-3xl bg-[#162332] border border-[#25374C] flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
                   <div className="space-y-3 text-center md:text-left">
                     <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#D98A1E] bg-[#D98A1E]/10 px-3 py-1 rounded-md inline-block">
-                      Next Fellowship Batch: 21 Sep 2026
+                      Next Fellowship Batch: {UPCOMING_COHORT.startDateFormatted} ({UPCOMING_COHORT.cohortLabel})
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-black text-white">
                       Ready to Build Autonomous AI Agents?
@@ -131,7 +131,7 @@ export default function App() {
                       className="bg-[#D98A1E] hover:bg-[#e7992c] text-white font-extrabold text-xs uppercase tracking-wider px-6 py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-[#D98A1E]/20 cursor-pointer"
                     >
                       <FileText className="w-4 h-4" />
-                      <span>Fill 21 Sep Google Form</span>
+                      <span>Fill {UPCOMING_COHORT.shortDate} Google Form</span>
                     </button>
 
                     <button
@@ -140,7 +140,7 @@ export default function App() {
                       className="bg-[#0B131B] hover:bg-[#1f2f42] text-white font-bold text-xs px-5 py-3.5 rounded-xl transition border border-[#25374C] flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <Calendar className="w-4 h-4 text-[#D98A1E]" />
-                      <span>Weekly Free Build</span>
+                      <span>Saturday Free Masterclass</span>
                     </button>
                   </div>
                 </div>
@@ -182,7 +182,7 @@ export default function App() {
       {/* Persistent Footer */}
       <Footer onNavigate={handleNavigate} />
 
-      {/* Floating Action Button (Apply 21 Sep Form) */}
+      {/* Floating Action Button (Apply Form) */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-2">
         {/* Live Social Proof Badge */}
         {recentNotification && (
@@ -201,10 +201,10 @@ export default function App() {
             id="floating-apply-form-btn"
             onClick={() => handleNavigate('register')}
             className="bg-[#D98A1E] hover:bg-[#e7992c] text-white font-extrabold text-xs sm:text-sm px-4 sm:px-5 py-3 rounded-full shadow-2xl shadow-[#D98A1E]/30 flex items-center gap-2 cursor-pointer transition transform hover:scale-105"
-            title="Open 21 Sep 2026 Registration Form"
+            title={`Open ${UPCOMING_COHORT.startDateFormatted} Registration Form`}
           >
             <FileText className="w-4 h-4 text-white" />
-            <span>Apply 21 Sep Form</span>
+            <span>Apply {UPCOMING_COHORT.shortDate} Form</span>
           </button>
         )}
       </div>
