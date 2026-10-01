@@ -72,7 +72,7 @@ Hello Mohammed Jameel, I have completed the tuition payment for The Agent Builde
 *Program & Track Details:*
 • *Program:* The Agent Builder Intensive (14 Days • 6 Sprints)
 • *Track:* ${activePath.title}
-• *Cohort Batch:* ${AGENT_BUILDER_INTENSIVE.startDate} (${AGENT_BUILDER_INTENSIVE.cohortLabel})
+• *Cohort Batch:* Upcoming Cohort (${AGENT_BUILDER_INTENSIVE.startDate})
 • *Lead Mentors:* Mohammed Jameel & Naveed KS
 
 *Payment Verification Details:*

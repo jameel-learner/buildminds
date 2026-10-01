@@ -34,7 +34,7 @@ export const GoogleFormSection: React.FC<GoogleFormSectionProps> = ({ onNavigate
             Register for The Agent Builder Intensive
           </h2>
           <p className="text-base sm:text-lg text-slate-300">
-            Submit your application for the upcoming <strong>{AGENT_BUILDER_INTENSIVE.startDate} ({AGENT_BUILDER_INTENSIVE.cohortLabel})</strong> fellowship batch. Reviewed directly by Mohammed Jameel and Naveed KS.
+            Submit your application for the upcoming <strong>{AGENT_BUILDER_INTENSIVE.startDate}</strong> fellowship batch. Reviewed directly by Mohammed Jameel and Naveed KS.
           </p>
         </div>
 

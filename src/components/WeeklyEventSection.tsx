@@ -332,7 +332,7 @@ END:VCALENDAR`;
               {/* Pathway to Dynamic Agent Builder Intensive with Launch Price Callout */}
               <div className="mt-4 pt-5 border-t border-[#25374C] space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-white">Full 14-Day Intensive ({UPCOMING_COHORT.cohortLabel}):</span>
+                  <span className="font-semibold text-white">Full 14-Day Intensive (Upcoming Cohort):</span>
                   <span className="text-emerald-400 font-bold font-mono">₹6,000 INR (Save ₹89,000)</span>
                 </div>
                 <p className="text-[11px] text-slate-400">

@@ -194,7 +194,7 @@ export const WEEKLY_EVENT = {
 // Paid Offering: The Agent Builder Intensive (14 Days, 6 Sprints + Basecamp + Hackathon)
 export const AGENT_BUILDER_INTENSIVE = {
   title: 'The Agent Builder Intensive',
-  badge: `Flagship 14-Day Cohort • ${UPCOMING_COHORT.cohortLabel}`,
+  badge: `Flagship 14-Day Intensive • Starts ${UPCOMING_COHORT.startDateFormatted}`,
   tagline: '14 Days, 6 Sprints: From Foundation to Production-Grade Autonomous Multi-Agent Systems',
   startDate: UPCOMING_COHORT.startDateFormatted, // Dynamically computed start date (cascades on the 4th Monday / after 3 Mondays)
   cohortNumber: UPCOMING_COHORT.cohortNumber,

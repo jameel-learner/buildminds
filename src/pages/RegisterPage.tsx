@@ -51,7 +51,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
           <div className="relative z-10 space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0B131B] border border-[#25374C] text-xs font-semibold text-[#D98A1E]">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>COHORT ADMISSIONS • {UPCOMING_COHORT.startDateFormatted.toUpperCase()} ({UPCOMING_COHORT.cohortLabel.toUpperCase()})</span>
+              <span>UPCOMING COHORT ADMISSIONS • {UPCOMING_COHORT.startDateFormatted.toUpperCase()}</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
@@ -59,7 +59,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
             </h1>
 
             <p className="text-slate-300 text-sm sm:text-base max-w-3xl leading-relaxed">
-              Complete the admissions application below for the upcoming <strong>{UPCOMING_COHORT.startDateFormatted}</strong> ({UPCOMING_COHORT.cohortLabel}) cohort. Each application is reviewed directly by our engineering mentors, <strong>Mohammed Jameel</strong> and <strong>Naveed KS</strong>.
+              Complete the admissions application below for the upcoming <strong>{UPCOMING_COHORT.startDateFormatted}</strong> cohort. Each application is reviewed directly by our engineering mentors, <strong>Mohammed Jameel</strong> and <strong>Naveed KS</strong>.
             </p>
 
             {/* Key Batch Parameters & Discount Banner */}
@@ -161,7 +161,7 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
 
           <div className="mt-4 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#D98A1E]" />
-            <span>Secure official Google Form for Build Minds {UPCOMING_COHORT.startDateFormatted} ({UPCOMING_COHORT.cohortLabel}) Admissions.</span>
+            <span>Secure official Google Form for Build Minds upcoming {UPCOMING_COHORT.startDateFormatted} admissions.</span>
           </div>
         </div>
 

@@ -216,7 +216,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate }) => {
               <Bot className="w-4 h-4 text-[#D98A1E] shrink-0" />
               <div className="text-left">
                 <span className="text-sm font-semibold block">The Agent Builder Intensive</span>
-                <span className="text-[11px] text-slate-400 block">{UPCOMING_COHORT.cohortLabel} • Starts {UPCOMING_COHORT.startDateFormatted}</span>
+                <span className="text-[11px] text-slate-400 block">Upcoming Cohort • Starts {UPCOMING_COHORT.startDateFormatted}</span>
               </div>
             </div>
             <span className="text-[10px] bg-[#D98A1E]/20 text-[#D98A1E] px-2 py-0.5 rounded font-mono font-bold shrink-0">

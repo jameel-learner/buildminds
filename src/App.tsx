@@ -71,7 +71,7 @@ export default function App() {
         </span>
         <span className="hidden sm:inline text-slate-500">•</span>
         <span className="text-slate-300">
-          Official Google Form applications are open for {UPCOMING_COHORT.cohortLabel}
+          Official Google Form applications are open for the upcoming cohort
         </span>
         <button
           id="top-bar-apply-btn"
@@ -114,7 +114,7 @@ export default function App() {
                 <div className="p-8 sm:p-10 rounded-3xl bg-[#162332] border border-[#25374C] flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
                   <div className="space-y-3 text-center md:text-left">
                     <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#D98A1E] bg-[#D98A1E]/10 px-3 py-1 rounded-md inline-block">
-                      Next Fellowship Batch: {UPCOMING_COHORT.startDateFormatted} ({UPCOMING_COHORT.cohortLabel})
+                      Next Fellowship Batch: {UPCOMING_COHORT.startDateFormatted}
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-black text-white">
                       Ready to Build Autonomous AI Agents?

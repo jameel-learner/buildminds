@@ -2,9 +2,14 @@
  * Schedule & Cohort Automation Utilities for Build Minds
  *
  * Rules:
- * 1. The paid program 'The Agent Builder Intensive' start dates cascade after 3 Mondays
- *    (i.e. on the 4th Monday / every 28 days) calculated from a given reference Cohort start Monday.
+ * 1. The paid program 'The Agent Builder Intensive' start dates follow the 3rd Monday
+ *    (every 3 weeks / 21 days) calculated from a given reference Cohort start Monday.
  *    Reference cohort: Cohort 2 in progress starting 21 Sep 2026.
+ *    - Cohort 2: 21 Sep 2026
+ *    - Cohort 3: 12 Oct 2026 (3rd Monday / +21 days)
+ *    - Cohort 4: 02 Nov 2026 (3rd Monday / +21 days)
+ *    - Cohort 5: 23 Nov 2026 (3rd Monday / +21 days)
+ *    - Cohort 6: 14 Dec 2026 (3rd Monday / +21 days)
  * 2. If today's date is past the scheduled cohort start date, the next upcoming batch launch
  *    dates are automatically calculated and reflected everywhere on the website.
  * 3. The free program 'Build Your First Agent — Live' has one combined session every Saturday (11:00 AM – 2:00 PM IST).
@@ -15,23 +20,23 @@ export interface CohortScheduleConfig {
   referenceCohortNumber: number;
   /** ISO date string of reference Monday: 'YYYY-MM-DD' */
   referenceCohortMonday: string;
-  /** Cadence in weeks: 4 weeks (cascade after 3 Mondays = on the 4th Monday = 28 days) */
+  /** Cadence in weeks: 3 weeks (every 3rd Monday = 21 days) */
   cycleWeeks: number;
 }
 
 export const COHORT_SCHEDULE_CONFIG: CohortScheduleConfig = {
   referenceCohortNumber: 2,
   referenceCohortMonday: '2026-09-21', // Cohort 2 reference start Monday
-  cycleWeeks: 4, // 28 days
+  cycleWeeks: 3, // 3 weeks = 21 days (every 3rd Monday)
 };
 
 export interface CohortDetails {
   cohortNumber: number;
   cohortLabel: string;
   startDate: Date;
-  startDateFormatted: string; // e.g. "19 Oct 2026"
-  shortDate: string; // e.g. "19 Oct"
-  fullBatchLabel: string; // e.g. "Cohort 3 • 19 Oct 2026"
+  startDateFormatted: string; // e.g. "12 Oct 2026"
+  shortDate: string; // e.g. "12 Oct"
+  fullBatchLabel: string; // e.g. "Cohort 3 • 12 Oct 2026"
   badgeText: string; // e.g. "Cohort 3 Batch"
 }
 
@@ -128,23 +133,24 @@ export function getCohortSchedule(
   const upcomingDate = cohortDate;
   const subsequentDate = addDays(upcomingDate, cycleDays);
 
-  const formatCohortObj = (num: number, date: Date): CohortDetails => {
+  const formatCohortObj = (num: number, date: Date, type: 'upcoming' | 'inProgress' | 'subsequent'): CohortDetails => {
     const formatted = formatCohortDate(date);
     const short = formatShortDate(date);
+    const label = type === 'upcoming' ? 'Upcoming Cohort' : type === 'inProgress' ? 'Current Cohort' : 'Next Cohort';
     return {
       cohortNumber: num,
-      cohortLabel: `Cohort ${num}`,
+      cohortLabel: label,
       startDate: date,
       startDateFormatted: formatted,
       shortDate: short,
-      fullBatchLabel: `Cohort ${num} • ${formatted}`,
+      fullBatchLabel: `${label} • ${formatted}`,
       badgeText: `${formatted} Batch`,
     };
   };
 
-  const upcomingCohort = formatCohortObj(cohortNum, upcomingDate);
-  const inProgressCohort = formatCohortObj(lastStartedCohort.cohortNumber, lastStartedCohort.startDate);
-  const subsequentCohort = formatCohortObj(cohortNum + 1, subsequentDate);
+  const upcomingCohort = formatCohortObj(cohortNum, upcomingDate, 'upcoming');
+  const inProgressCohort = formatCohortObj(lastStartedCohort.cohortNumber, lastStartedCohort.startDate, 'inProgress');
+  const subsequentCohort = formatCohortObj(cohortNum + 1, subsequentDate, 'subsequent');
 
   // Compute next upcoming Saturday
   const dayOfWeek = todayStart.getDay(); // 0: Sun, ..., 6: Sat

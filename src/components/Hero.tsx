@@ -34,7 +34,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           <span className="flex h-2 w-2 rounded-full bg-[#D98A1E] animate-ping" />
           <span className="font-bold text-[#D98A1E] uppercase tracking-wider">{BRAND.tagline}</span>
           <span className="text-slate-500">|</span>
-          <span className="text-slate-300">Next Intensive: {UPCOMING_COHORT.startDateFormatted} ({UPCOMING_COHORT.cohortLabel})</span>
+          <span className="text-slate-300">Next Intensive: {UPCOMING_COHORT.startDateFormatted}</span>
           <button
             id="hero-banner-register-btn"
             onClick={() => onNavigate('register')}

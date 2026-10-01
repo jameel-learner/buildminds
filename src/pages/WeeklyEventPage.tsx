@@ -349,7 +349,7 @@ END:VCALENDAR`;
               {/* Pathway to Dynamic Intensive with ₹6,000 launch pricing */}
               <div className="pt-4 border-t border-[#25374C] space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-300 font-semibold">14-Day Intensive ({UPCOMING_COHORT.cohortLabel}):</span>
+                  <span className="text-slate-300 font-semibold">14-Day Intensive (Upcoming Cohort):</span>
                   <span className="text-emerald-400 font-bold font-mono">₹6,000 INR (Save ₹89,000)</span>
                 </div>
                 <p className="text-[11px] text-slate-400 leading-relaxed">
