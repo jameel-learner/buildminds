@@ -11,18 +11,52 @@ import { WeeklyEventPage } from './pages/WeeklyEventPage';
 import { IntensivePage } from './pages/IntensivePage';
 import { MentorsPage } from './pages/MentorsPage';
 import { EnrollmentPage } from './pages/EnrollmentPage';
+import { AdminPage } from './pages/AdminPage';
 import { PageRoute, CoursePath } from './types';
 import { BRAND, AGENT_BUILDER_INTENSIVE, UPCOMING_COHORT } from './data/buildMindsData';
 import { FileText, ArrowRight, Sparkles, Calendar, CheckCircle2 } from 'lucide-react';
 
+const parseRouteFromUrl = (): PageRoute => {
+  if (typeof window === 'undefined') return 'home';
+  const path = window.location.pathname.replace(/^\//, '').toLowerCase();
+  const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+
+  const checkMatch = (str: string): PageRoute | null => {
+    if (str === 'weekly-event' || str === 'weekly' || str === 'saturday') return 'weekly-event';
+    if (str === 'enrollment' || str === 'step-by-step' || str === 'onboarding' || str === 'enroll') return 'enrollment';
+    if (str === 'admin' || str === 'admin/login' || str === 'login' || str === 'command-center') return 'admin';
+    if (str === 'intensive') return 'intensive';
+    if (str === 'register' || str === 'apply') return 'register';
+    if (str === 'curriculum') return 'curriculum';
+    if (str === 'mentors') return 'mentors';
+    if (str === 'home' || str === '') return 'home';
+    return null;
+  };
+
+  return checkMatch(path) || checkMatch(hash) || 'home';
+};
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<PageRoute>('home');
+  const [currentPage, setCurrentPage] = useState<PageRoute>(parseRouteFromUrl);
   const [selectedPath, setSelectedPath] = useState<CoursePath | null>(null);
   const [recentNotification, setRecentNotification] = useState<{
     id: number;
     text: string;
     subtext: string;
   } | null>(null);
+
+  // Sync URL popstate & hash changes for direct unique URLs
+  useEffect(() => {
+    const onLocationChange = () => {
+      setCurrentPage(parseRouteFromUrl());
+    };
+    window.addEventListener('popstate', onLocationChange);
+    window.addEventListener('hashchange', onLocationChange);
+    return () => {
+      window.removeEventListener('popstate', onLocationChange);
+      window.removeEventListener('hashchange', onLocationChange);
+    };
+  }, []);
 
   // Social proof ticker
   useEffect(() => {
@@ -52,13 +86,20 @@ export default function App() {
 
   const handleNavigate = (page: PageRoute) => {
     setCurrentPage(page);
+    const targetUrl = page === 'home' ? '/' : `/${page}`;
+    try {
+      if (window.location.pathname !== targetUrl) {
+        window.history.pushState({ page }, '', targetUrl);
+      }
+    } catch {
+      window.location.hash = page;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSelectPathForEnrollment = (path: CoursePath) => {
     setSelectedPath(path);
-    setCurrentPage('enrollment');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    handleNavigate('enrollment');
   };
 
   return (
@@ -176,6 +217,10 @@ export default function App() {
 
         {currentPage === 'enrollment' && (
           <EnrollmentPage onNavigate={handleNavigate} selectedPath={selectedPath} />
+        )}
+
+        {currentPage === 'admin' && (
+          <AdminPage onNavigate={handleNavigate} />
         )}
       </main>
 

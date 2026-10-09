@@ -15,7 +15,10 @@ import {
   QrCode,
   Terminal,
   Layers,
-  Code2
+  Code2,
+  Share2,
+  Check,
+  Phone
 } from 'lucide-react';
 import {
   WEEKLY_EVENT,
@@ -26,6 +29,7 @@ import {
   UPCOMING_SATURDAY
 } from '../data/buildMindsData';
 import { PageRoute } from '../types';
+import { dbService } from '../services/db';
 import confetti from 'canvas-confetti';
 
 interface WeeklyEventPageProps {
@@ -35,37 +39,103 @@ interface WeeklyEventPageProps {
 export const WeeklyEventPage: React.FC<WeeklyEventPageProps> = ({ onNavigate }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [role, setRole] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isOpeningWa, setIsOpeningWa] = useState(false);
   const [ticketId, setTicketId] = useState('');
+  const [copiedUrl, setCopiedUrl] = useState(false);
+
+  const handleCopyShareUrl = () => {
+    const directUrl = `${window.location.origin}/weekly-event`;
+    navigator.clipboard.writeText(directUrl);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2500);
+  };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email) return;
+    if (!name || !email || !phone) return;
 
     const passCode = `BM-SAT-${Math.floor(100000 + Math.random() * 900000)}`;
     setTicketId(passCode);
-    setIsRegistered(true);
 
+    // 1. Save data immediately to the new light database (irrespective of WhatsApp send)
+    try {
+      dbService.saveWeeklyRegistration({
+        id: passCode,
+        name,
+        email,
+        phone,
+        role: role.trim() || 'Software Engineer',
+        eventDate: UPCOMING_SATURDAY.formatted,
+        notes: 'Direct registration via /weekly-event standalone page'
+      });
+    } catch (err) {
+      console.error('Database save error:', err);
+    }
+
+    // 2. Open WhatsApp message popup
     const waMsg = `Hello Build Minds, I would like to claim my Free Saturday Pass for the Live Agentic AI Masterclass (11:00 AM – 2:00 PM IST).
 
 Details:
 • Name: ${name}
+• Phone / WhatsApp: ${phone}
 • Email: ${email}
 • Role: ${role.trim() || 'Not specified'}
-• Pass ID: ${passCode}`;
+• Pass ID: ${passCode}
+• Masterclass Date: ${UPCOMING_SATURDAY.formatted}`;
 
-    const whatsappUrl = `https://wa.me/918892920286?text=${encodeURIComponent(waMsg)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    const whatsappUrl = `https://wa.me/919886558433?text=${encodeURIComponent(waMsg)}`;
+    setIsOpeningWa(true);
 
-    try {
-      confetti({
-        particleCount: 100,
-        spread: 80,
-        origin: { y: 0.5 },
-        colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
-      });
-    } catch {}
+    const popup = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+    // 3. Trigger confetti and show success pass AFTER popup closes or focus returns
+    let hasCompleted = false;
+    const triggerSuccessAndConfetti = () => {
+      if (hasCompleted) return;
+      hasCompleted = true;
+      setIsOpeningWa(false);
+      setIsRegistered(true);
+
+      try {
+        confetti({
+          particleCount: 110,
+          spread: 85,
+          origin: { y: 0.55 },
+          colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
+        });
+      } catch {}
+    };
+
+    if (popup) {
+      const pollTimer = setInterval(() => {
+        try {
+          if (popup.closed) {
+            clearInterval(pollTimer);
+            triggerSuccessAndConfetti();
+          }
+        } catch {
+          clearInterval(pollTimer);
+          triggerSuccessAndConfetti();
+        }
+      }, 350);
+
+      // Fallback timer if browser restricts popup.closed check
+      setTimeout(() => {
+        clearInterval(pollTimer);
+        triggerSuccessAndConfetti();
+      }, 3500);
+    } else {
+      triggerSuccessAndConfetti();
+    }
+
+    const handleFocus = () => {
+      window.removeEventListener('focus', handleFocus);
+      setTimeout(triggerSuccessAndConfetti, 400);
+    };
+    window.addEventListener('focus', handleFocus);
   };
 
   const handleDownloadCalendar = () => {
@@ -95,17 +165,28 @@ END:VCALENDAR`;
   return (
     <div className="min-h-screen bg-[#0B131B] text-white py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-10">
-        {/* Navigation Breadcrumb */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={() => onNavigate('home')}
-            aria-label="Back to Home"
-            title="Back to Home"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-3 py-2 sm:px-4 sm:py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
-          >
-            <ArrowLeft className="w-4 h-4 text-[#D98A1E]" />
-            <span className="hidden sm:inline">Back to Home</span>
-          </button>
+        {/* Navigation Breadcrumb & Direct Share URL */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => onNavigate('home')}
+              aria-label="Back to Home"
+              title="Back to Home"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-white bg-[#162332] px-3 py-2 sm:px-4 sm:py-2 rounded-xl border border-[#25374C] transition cursor-pointer"
+            >
+              <ArrowLeft className="w-4 h-4 text-[#D98A1E]" />
+              <span className="hidden sm:inline">Back to Home</span>
+            </button>
+
+            <button
+              onClick={handleCopyShareUrl}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold bg-[#162332] hover:bg-[#203246] border border-[#25374C] text-[#D98A1E] px-3 py-2 rounded-xl transition cursor-pointer"
+              title="Copy direct unique page URL to share with participants"
+            >
+              {copiedUrl ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+              <span>{copiedUrl ? 'Unique URL Copied!' : 'Share Direct URL'}</span>
+            </button>
+          </div>
 
           <span className="text-xs font-mono text-[#D98A1E] font-bold bg-[#D98A1E]/10 px-3 py-1 rounded-full border border-[#D98A1E]/20">
             FREE LIVE MASTERCLASS • EVERY SATURDAY
@@ -298,6 +379,23 @@ END:VCALENDAR`;
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      WhatsApp / Phone Number *
+                    </label>
+                    <div className="relative">
+                      <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                      <input
+                        type="tel"
+                        required
+                        placeholder="+91 98865 58433"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#0B131B] border border-[#25374C] text-white text-sm focus:outline-none focus:border-[#D98A1E]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">
                       Current Role / Focus *
                     </label>
                     <input
@@ -319,6 +417,39 @@ END:VCALENDAR`;
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </form>
+              ) : isOpeningWa ? (
+                <div className="p-6 rounded-2xl bg-[#0B131B] border border-[#D98A1E]/60 text-center space-y-4 animate-in fade-in">
+                  <div className="w-12 h-12 rounded-full bg-[#D98A1E]/20 text-[#D98A1E] flex items-center justify-center mx-auto animate-pulse">
+                    <Video className="w-6 h-6 text-[#D98A1E]" />
+                  </div>
+                  <div>
+                    <h4 className="text-base font-bold text-white">Opening WhatsApp Dispatch…</h4>
+                    <p className="text-xs text-slate-300 mt-1">
+                      Please send the prefilled message in WhatsApp to confirm your seat with Mohammed Jameel (+91 9886558433).
+                    </p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-[#162332] border border-[#25374C] text-xs text-slate-300 font-mono">
+                    Registration saved to database • Pass: {ticketId}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsOpeningWa(false);
+                      setIsRegistered(true);
+                      try {
+                        confetti({
+                          particleCount: 110,
+                          spread: 80,
+                          origin: { y: 0.55 },
+                          colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
+                        });
+                      } catch {}
+                    }}
+                    className="w-full bg-[#D98A1E] hover:bg-[#e7992c] text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>Message Sent / View Saturday Pass Now</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               ) : (
                 <div className="p-6 rounded-2xl bg-[#0B131B] border border-[#D98A1E]/60 text-center space-y-4 animate-in fade-in">
                   <div className="w-12 h-12 rounded-full bg-[#D98A1E]/20 text-[#D98A1E] flex items-center justify-center mx-auto">
@@ -328,12 +459,12 @@ END:VCALENDAR`;
                   <div>
                     <h4 className="text-lg font-bold text-white">Seat Confirmed!</h4>
                     <p className="text-xs text-slate-300 mt-1">
-                      Welcome, <strong className="text-white">{name}</strong> ({role})! Pass details dispatched to WhatsApp (+91 8892920286). Zoom links for this Saturday (11:00 AM – 2:00 PM IST) are on their way.
+                      Welcome, <strong className="text-white">{name}</strong>! Pass details dispatched to WhatsApp (+91 9886558433). Zoom link and calendar invite are ready below.
                     </p>
                   </div>
 
                   <div className="p-3 rounded-xl bg-[#162332] border border-[#25374C] font-mono text-xs text-[#D98A1E] font-bold">
-                    Pass Serial: {ticketId}
+                    Pass Serial: {ticketId} • {UPCOMING_SATURDAY.formatted}
                   </div>
 
                   <button

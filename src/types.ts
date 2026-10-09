@@ -80,4 +80,5 @@ export type PageRoute =
   | 'weekly-event'
   | 'curriculum'
   | 'mentors'
-  | 'enrollment';
+  | 'enrollment'
+  | 'admin';

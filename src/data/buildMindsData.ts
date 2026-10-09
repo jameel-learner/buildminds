@@ -59,29 +59,32 @@ export const MENTORS: Mentor[] = [
   {
     id: 'naveed-ks',
     name: 'Naveed KS',
-    role: 'Engineering & QE Leader | AI / Agentic Systems Testing',
-    company: 'Ex-Group Manager QE/Engineering at interface.ai',
+    role: 'AI Product & Engineering Leader | Agentic & Generative AI',
+    company: 'Ex-interface.ai | Scaled agentic AI products from 10 to 100+ banks and credit unions',
     email: 'naveed.ks@gmail.com',
     location: 'Bengaluru, India',
     experience: '22+ Years Building Quality-First Engineering Orgs',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
-    bio: 'Built interface.ai’s entire QE and automation function from zero and re-engineered it for the agentic AI era. Scaled agentic Voice, Chat & Document AI to 100+ banking customers, pioneering probabilistic evaluation of non-deterministic LLM-driven systems. Veteran engineering leader from Cisco Systems, Pivotal, HP, and Altisource.',
+    bio: "Helped scale interface.ai's agentic Voice, Chat and Document AI products from 10 to 100+ banking customers. Led engineering and quality through that growth. Built the frameworks that made Generative AI dependable in regulated environments, from evaluation harnesses to guardrails. Earlier work at Cisco, HP and Altisource.",
     careerHighlights: [
-      'Group Manager, QE / Engineering at interface.ai (Nov 2022 – May 2026) — scaled agentic voice & chat bots across 100+ banks',
-      'Engineered probabilistic testing frameworks shifting from pass/fail to scored lexical/semantic evaluation of LLMs',
-      'Multi-provider LLM orchestration (Groq Llama 3.3, Claude Sonnet/Opus, Gemini, OpenAI)',
-      'Built advanced RAG pipelines with ChromaDB, Pinecone, PyMuPDF, and confidence-based retrieval routing',
-      'Sr. QA Manager at Altisource (2012 – 2022); earlier at Cisco Systems (Grade VIII), Pivotal, and Hewlett-Packard',
-      'BE in Computer Science & Engineering from Bangalore University'
+      'Part of the core leadership team that scaled interface.ai from 10 to 100+ banking customers (Nov 2022 – May 2026)',
+      'Designed Agentic and Generative AI frameworks that score agent behavior on accuracy, tone and tool-use, replacing pass/fail checks',
+      'Shipped production voicebots, chatbots and document AI for banks and credit unions across multiple LLM providers'
     ],
     specialties: [
-      'Agentic Systems Testing & Evals',
-      'Multi-Provider LLM Orchestration',
-      'Function Calling & Tool-Use',
-      'RAG & Vector Search (ChromaDB)',
-      'Probabilistic Quality Frameworks'
+      'Agentic AI Frameworks',
+      'Generative AI Systems',
+      'Agent Reliability & Evals',
+      'Agentic Product Delivery',
+      'Scaling Engineering Teams'
     ],
-    skills: ['Groq / Claude / Gemini', 'Agentic Testing', 'ChromaDB', 'Python/Java', 'CI/CD Pipelines', 'Streamlit'],
+    skills: [
+      'Agentic AI Frameworks',
+      'Generative AI Systems',
+      'Agent Reliability & Evals',
+      'Agentic Product Delivery',
+      'Scaling Engineering Teams'
+    ],
     rating: 4.99,
     sessionsConducted: 540,
     availableSlots: ['Tue 7:00 PM IST', 'Thu 6:30 PM IST', 'Sat 4:00 PM IST'],

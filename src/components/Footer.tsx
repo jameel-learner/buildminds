@@ -2,7 +2,7 @@ import React from 'react';
 import { BuildMindsLogo } from './BuildMindsLogo';
 import { PageRoute } from '../types';
 import { AGENT_BUILDER_INTENSIVE, BRAND } from '../data/buildMindsData';
-import { FileText, Calendar, ArrowUpRight, Mail } from 'lucide-react';
+import { FileText, Calendar, ArrowUpRight, Mail, ShieldCheck } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (page: PageRoute) => void;
@@ -126,7 +126,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   }}
                   className="hover:text-[#D98A1E] transition text-left"
                 >
-                  Naveed KS (Ex-interface.ai / Cisco / Altisource)
+                  Naveed KS (Ex-interface.ai | Scaled 100+ Banks)
                 </button>
               </li>
               <li>

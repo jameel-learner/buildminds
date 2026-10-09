@@ -12,10 +12,12 @@ import {
   Layers,
   Terminal,
   ShieldCheck,
-  Bot
+  Bot,
+  Phone
 } from 'lucide-react';
 import { WEEKLY_EVENT, AGENT_BUILDER_INTENSIVE, UPCOMING_COHORT, UPCOMING_SATURDAY } from '../data/buildMindsData';
 import { PageRoute } from '../types';
+import { dbService } from '../services/db';
 import confetti from 'canvas-confetti';
 
 interface WeeklyEventSectionProps {
@@ -25,37 +27,94 @@ interface WeeklyEventSectionProps {
 export const WeeklyEventSection: React.FC<WeeklyEventSectionProps> = ({ onNavigate }) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [role, setRole] = useState('');
   const [isRegistered, setIsRegistered] = useState(false);
+  const [isOpeningWa, setIsOpeningWa] = useState(false);
   const [ticketNumber, setTicketNumber] = useState('');
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !name) return;
+    if (!email || !name || !phone) return;
 
     const randomTicket = `BM-SAT-${Math.floor(100000 + Math.random() * 900000)}`;
     setTicketNumber(randomTicket);
-    setIsRegistered(true);
 
+    // 1. Save data immediately to the new light database
+    try {
+      dbService.saveWeeklyRegistration({
+        id: randomTicket,
+        name,
+        email,
+        phone,
+        role: role.trim() || 'Software Engineer',
+        eventDate: UPCOMING_SATURDAY.formatted,
+        notes: 'Registered via homepage section'
+      });
+    } catch (err) {
+      console.error('Database save error:', err);
+    }
+
+    // 2. Open WhatsApp message popup
     const waMsg = `Hello Build Minds, I would like to claim my Free Saturday Pass for the Live Agentic AI Masterclass (11:00 AM – 2:00 PM IST).
 
 Details:
 • Name: ${name}
+• Phone / WhatsApp: ${phone}
 • Email: ${email}
 • Role: ${role.trim() || 'Not specified'}
-• Pass ID: ${randomTicket}`;
+• Pass ID: ${randomTicket}
+• Date: ${UPCOMING_SATURDAY.formatted}`;
 
-    const whatsappUrl = `https://wa.me/918892920286?text=${encodeURIComponent(waMsg)}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    const whatsappUrl = `https://wa.me/919886558433?text=${encodeURIComponent(waMsg)}`;
+    setIsOpeningWa(true);
 
-    try {
-      confetti({
-        particleCount: 85,
-        spread: 75,
-        origin: { y: 0.6 },
-        colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
-      });
-    } catch {}
+    const popup = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+    // 3. Trigger confetti and show ticket AFTER popup window closes or focus returns
+    let hasCompleted = false;
+    const triggerCompletion = () => {
+      if (hasCompleted) return;
+      hasCompleted = true;
+      setIsOpeningWa(false);
+      setIsRegistered(true);
+
+      try {
+        confetti({
+          particleCount: 95,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
+        });
+      } catch {}
+    };
+
+    if (popup) {
+      const pollTimer = setInterval(() => {
+        try {
+          if (popup.closed) {
+            clearInterval(pollTimer);
+            triggerCompletion();
+          }
+        } catch {
+          clearInterval(pollTimer);
+          triggerCompletion();
+        }
+      }, 350);
+
+      setTimeout(() => {
+        clearInterval(pollTimer);
+        triggerCompletion();
+      }, 3500);
+    } else {
+      triggerCompletion();
+    }
+
+    const onFocus = () => {
+      window.removeEventListener('focus', onFocus);
+      setTimeout(triggerCompletion, 400);
+    };
+    window.addEventListener('focus', onFocus);
   };
 
   const handleDownloadCalendar = () => {
@@ -276,6 +335,23 @@ END:VCALENDAR`;
 
                   <div>
                     <label className="block text-xs font-medium text-slate-300 mb-1">
+                      WhatsApp / Phone Number *
+                    </label>
+                    <div className="relative">
+                      <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                      <input
+                        type="tel"
+                        required
+                        placeholder="+91 98865 58433"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-[#0B131B] border border-[#25374C] text-white text-sm focus:outline-none focus:border-[#D98A1E]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-slate-300 mb-1">
                       Current Role / Designation *
                     </label>
                     <input
@@ -299,9 +375,42 @@ END:VCALENDAR`;
 
                   <div className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5 pt-1">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#D98A1E]" />
-                    <span>Instant WhatsApp pass delivery to 8892920286. No credit card required.</span>
+                    <span>Instant WhatsApp pass delivery to +91 9886558433. No credit card required.</span>
                   </div>
                 </form>
+              ) : isOpeningWa ? (
+                <div className="p-5 rounded-xl bg-[#0B131B] border border-[#D98A1E]/50 space-y-4 text-center animate-in fade-in">
+                  <div className="w-12 h-12 rounded-full bg-[#D98A1E]/20 text-[#D98A1E] flex items-center justify-center mx-auto animate-pulse">
+                    <Video className="w-6 h-6 text-[#D98A1E]" />
+                  </div>
+                  <div>
+                    <h4 className="text-base font-bold text-white">Opening WhatsApp Dispatch…</h4>
+                    <p className="text-xs text-slate-300 mt-1">
+                      Please send the prefilled WhatsApp message to confirm your pass with Mohammed Jameel (+91 9886558433).
+                    </p>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-[#162332] border border-[#25374C] font-mono text-xs text-[#D98A1E] font-bold">
+                    Registration saved • Ticket: {ticketNumber}
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsOpeningWa(false);
+                      setIsRegistered(true);
+                      try {
+                        confetti({
+                          particleCount: 95,
+                          spread: 80,
+                          origin: { y: 0.6 },
+                          colors: ['#D98A1E', '#2B3B4E', '#FFFFFF', '#10B981'],
+                        });
+                      } catch {}
+                    }}
+                    className="w-full bg-[#D98A1E] hover:bg-[#e7992c] text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>Message Sent / View Saturday Pass</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               ) : (
                 <div className="p-5 rounded-xl bg-[#0B131B] border border-[#D98A1E]/50 space-y-4 text-center animate-in fade-in">
                   <div className="w-12 h-12 rounded-full bg-[#D98A1E]/20 text-[#D98A1E] flex items-center justify-center mx-auto">
@@ -311,12 +420,12 @@ END:VCALENDAR`;
                   <div>
                     <h4 className="text-lg font-bold text-white">VIP Pass Confirmed!</h4>
                     <p className="text-xs text-slate-300 mt-1">
-                      Welcome, <strong className="text-white">{name}</strong> ({role || 'Participant'})! Details dispatched to WhatsApp (+91 8892920286). Your seat is reserved for this upcoming Saturday (11:00 AM – 2:00 PM IST).
+                      Welcome, <strong className="text-white">{name}</strong>! Details dispatched to WhatsApp (+91 9886558433). Your seat is reserved for this upcoming Saturday (11:00 AM – 2:00 PM IST).
                     </p>
                   </div>
 
                   <div className="p-3 rounded-lg bg-[#162332] border border-[#25374C] font-mono text-xs text-[#D98A1E] font-bold">
-                    Ticket ID: {ticketNumber}
+                    Ticket ID: {ticketNumber} • {UPCOMING_SATURDAY.formatted}
                   </div>
 
                   <button

@@ -122,7 +122,7 @@ export const MentorsSection: React.FC<MentorsSectionProps> = ({ onNavigate }) =>
                 {/* Core Specialties Pills */}
                 <div className="mb-6">
                   <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                    Core Technical Domains
+                    Core Domains
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {mentor.specialties.map((spec, sIdx) => (

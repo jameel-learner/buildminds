@@ -224,8 +224,11 @@ export const MentorsPage: React.FC<MentorsPageProps> = ({ onNavigate }) => {
                 22+ Years Building Quality-First Engineering Orgs
               </span>
               <h2 className="text-3xl font-black text-white">Naveed KS</h2>
-              <p className="text-sm font-semibold text-slate-300">
-                Engineering & QE Leader | AI / Agentic Systems Testing | Ex-Group Manager QE/Engineering at interface.ai
+              <p className="text-base font-bold text-white">
+                AI Product & Engineering Leader | Agentic & Generative AI
+              </p>
+              <p className="text-sm font-semibold text-[#D98A1E]">
+                Ex-interface.ai | Scaled agentic AI products from 10 to 100+ banks and credit unions
               </p>
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
                 <span className="flex items-center gap-1">
@@ -254,80 +257,106 @@ export const MentorsPage: React.FC<MentorsPageProps> = ({ onNavigate }) => {
             </div>
           </div>
 
+          {/* Executive Bio */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#0B131B] border border-[#25374C] space-y-3">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#D98A1E] font-mono">
+              Executive Bio
+            </div>
+            <p className="text-sm text-slate-200 leading-relaxed">
+              Helped scale interface.ai&apos;s agentic Voice, Chat and Document AI products from 10 to 100+ banking customers. Led engineering and quality through that growth.
+            </p>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Built the frameworks that made Generative AI dependable in regulated environments, from evaluation harnesses to guardrails. Earlier work at Cisco, HP and Altisource.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Experience */}
+            {/* Experience & Key Achievements */}
             <div className="space-y-4">
               <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
                 <Briefcase className="w-4 h-4 text-[#D98A1E]" />
-                Professional Experience
+                Key Achievements
               </h3>
 
-              <div className="space-y-4 text-xs text-slate-300">
-                <div className="p-4 rounded-xl bg-[#0B131B] border border-[#25374C] space-y-1">
-                  <div className="font-bold text-white text-sm">
-                    Group Manager, QE / Engineering | interface.ai
-                  </div>
-                  <div className="text-[#D98A1E] font-mono">Nov 2022 — May 2026 (Promoted twice)</div>
-                  <p className="text-slate-400 mt-1">
-                    Agentic Voice, Chat & Document AI for 100+ banks and credit unions. Built QE function from zero. Shifted from deterministic pass/fail to probabilistic scored evaluations of LLMs. Led teams of 10–30 spanning QA, automation, dev, and PM.
+              <div className="space-y-3 text-xs text-slate-300">
+                <div className="p-4 rounded-xl bg-[#0B131B] border border-[#25374C] flex items-start gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[#D98A1E] shrink-0 mt-0.5" />
+                  <p className="text-slate-200 leading-relaxed text-sm">
+                    Part of the core leadership team that scaled interface.ai from 10 to 100+ banking customers (Nov 2022 – May 2026)
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#0B131B] border border-[#25374C] space-y-1">
-                  <div className="font-bold text-white text-sm">
-                    Sr. Quality Assurance Manager | Altisource Business Solutions Pvt. Ltd.
-                  </div>
-                  <div className="text-[#D98A1E] font-mono">Apr 2012 — Nov 2022</div>
-                  <p className="text-slate-400 mt-1">
-                    Real estate & mortgage-tech products: LendersOne, Equator.com, Rentrange.com. Built REST API and UI automation from scratch. Scaled platform to 95% model coverage and saved $350K+/yr across 100K+ daily transactions.
+                <div className="p-4 rounded-xl bg-[#0B131B] border border-[#25374C] flex items-start gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[#D98A1E] shrink-0 mt-0.5" />
+                  <p className="text-slate-200 leading-relaxed text-sm">
+                    Designed Agentic and Generative AI frameworks that score agent behavior on accuracy, tone and tool-use, replacing pass/fail checks
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-[#0B131B] border border-[#25374C] space-y-1">
-                  <div className="font-bold text-white text-sm">
-                    Earlier Career: Cisco Systems, Pivotal, Hewlett-Packard
-                  </div>
-                  <div className="text-[#D98A1E] font-mono">2003 — 2012</div>
-                  <p className="text-slate-400 mt-1">
-                    Software Engineer Grade VIII at Cisco Systems India (2007–2012); Senior QA Engineer at Pivotal Bangalore (2004–2007); Support Engineer at HP (2003–2004).
+                <div className="p-4 rounded-xl bg-[#0B131B] border border-[#25374C] flex items-start gap-3">
+                  <CheckCircle2 className="w-4 h-4 text-[#D98A1E] shrink-0 mt-0.5" />
+                  <p className="text-slate-200 leading-relaxed text-sm">
+                    Shipped production voicebots, chatbots and document AI for banks and credit unions across multiple LLM providers
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Skills & AI Tooling */}
+            {/* Core Domains & Tooling */}
             <div className="space-y-6">
+              {/* Core Domains requested by Naveed */}
               <div className="space-y-3">
                 <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
                   <GraduationCap className="w-4 h-4 text-[#D98A1E]" />
-                  Education & Core Skills
+                  Core Domains
                 </h3>
 
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    'Agentic AI Frameworks',
+                    'Generative AI Systems',
+                    'Agent Reliability & Evals',
+                    'Agentic Product Delivery',
+                    'Scaling Engineering Teams'
+                  ].map((domain, dIdx) => (
+                    <span
+                      key={dIdx}
+                      className="text-xs bg-[#D98A1E]/15 border border-[#D98A1E]/40 text-[#D98A1E] font-bold px-3 py-1.5 rounded-lg shadow-sm"
+                    >
+                      {domain}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Education */}
+              <div className="space-y-2">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Academic Background
+                </h4>
                 <div className="p-3.5 rounded-xl bg-[#0B131B] border border-[#25374C] text-xs">
                   <div className="font-bold text-white">Bachelor of Engineering, Computer Science & Engineering</div>
                   <div className="text-slate-400">Bangalore University</div>
                 </div>
               </div>
 
-              {/* Technical skills from resume */}
+              {/* Technical skills */}
               <div className="space-y-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   AI & Agentic Systems Mastery
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
                   {[
-                    'Groq (Llama 3.3)',
-                    'Anthropic Claude',
-                    'Gemini',
                     'Multi-Provider LLM Orchestration',
-                    'Function Calling / Tool-Use',
-                    'ChromaDB Vector Search',
-                    'PyMuPDF Parsing',
-                    'Pinecone',
+                    'Evaluation Harnesses & Guardrails',
+                    'Tool-Use & Function Calling',
+                    'Agent Reliability Metrics',
+                    'Groq Llama 3.3',
+                    'Claude 3.5 Sonnet',
+                    'Gemini 2.5',
+                    'ChromaDB & Pinecone Vector Search',
                     'Probabilistic Testing',
-                    'Scored LLM Evaluation',
-                    'Streamlit',
-                    'Python, Java, SQL'
+                    'Python, Java, Streamlit'
                   ].map((s, idx) => (
                     <span
                       key={idx}
