@@ -1,0 +1,3 @@
+# Cloudflare Pages & Netlify Single Page Application (SPA) rewrite rule
+# Ensures all deep URLs (like /admin/, /weekly-event, /enrollment) are rewritten to /index.html with status 200
+/*    /index.html   200

@@ -1,0 +1,4 @@
+# Cloudflare Pages & Netlify SPA Redirect Rules
+# Put in root and output directory so Cloudflare Pages handles single page app routing
+
+/*    /index.html   200

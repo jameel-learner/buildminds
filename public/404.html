@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build Minds | Autonomous AI Agent Course</title>
+    <script>
+      // Single Page Application router fallback for static hosts
+      // Preserves original path and redirects to index.html with pathname in state
+      (function() {
+        var path = window.location.pathname;
+        var search = window.location.search;
+        var hash = window.location.hash;
+        // Redirect to root preserving the original location in sessionStorage
+        sessionStorage.setItem('spa_redirect_path', path + search + hash);
+        window.location.replace('/' + (hash ? hash : (path ? '#' + path : '')));
+      })();
+    </script>
+  </head>
+  <body style="background-color: #0B131B; color: #f1f5f9; font-family: ui-sans-serif, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px; text-align: center;">
+    <div>
+      <h2 style="font-size: 20px; font-weight: 700; color: #D98A1E; margin-bottom: 8px;">Loading Build Minds...</h2>
+      <p style="font-size: 14px; color: #94a3b8; margin: 0;">Redirecting to your requested page...</p>
+    </div>
+  </body>
+</html>

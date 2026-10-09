@@ -18,22 +18,43 @@ import { FileText, ArrowRight, Sparkles, Calendar, CheckCircle2 } from 'lucide-r
 
 const parseRouteFromUrl = (): PageRoute => {
   if (typeof window === 'undefined') return 'home';
-  const path = window.location.pathname.replace(/^\//, '').toLowerCase();
-  const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+
+  // Check if restored from SPA 404 fallback
+  let restoredPath = '';
+  try {
+    const saved = sessionStorage.getItem('spa_redirect_path');
+    if (saved) {
+      sessionStorage.removeItem('spa_redirect_path');
+      restoredPath = saved;
+      window.history.replaceState(null, '', saved);
+    }
+  } catch {
+    // ignore
+  }
+
+  const rawPath = (restoredPath || window.location.pathname)
+    .split('?')[0]
+    .replace(/^\/+|\/+$/g, '')
+    .toLowerCase();
+  const rawHash = window.location.hash
+    .replace(/^#\/?/, '')
+    .replace(/\/+$/, '')
+    .toLowerCase();
 
   const checkMatch = (str: string): PageRoute | null => {
-    if (str === 'weekly-event' || str === 'weekly' || str === 'saturday') return 'weekly-event';
-    if (str === 'enrollment' || str === 'step-by-step' || str === 'onboarding' || str === 'enroll') return 'enrollment';
-    if (str === 'admin' || str === 'admin/login' || str === 'login' || str === 'command-center') return 'admin';
-    if (str === 'intensive') return 'intensive';
-    if (str === 'register' || str === 'apply') return 'register';
-    if (str === 'curriculum') return 'curriculum';
-    if (str === 'mentors') return 'mentors';
-    if (str === 'home' || str === '') return 'home';
+    const clean = str.replace(/^\/+|\/+$/g, '');
+    if (clean === 'admin' || clean === 'admin/login' || clean === 'login' || clean === 'command-center') return 'admin';
+    if (clean === 'weekly-event' || clean === 'weekly' || clean === 'saturday') return 'weekly-event';
+    if (clean === 'enrollment' || clean === 'step-by-step' || clean === 'onboarding' || clean === 'enroll') return 'enrollment';
+    if (clean === 'intensive') return 'intensive';
+    if (clean === 'register' || clean === 'apply') return 'register';
+    if (clean === 'curriculum') return 'curriculum';
+    if (clean === 'mentors') return 'mentors';
+    if (clean === 'home' || clean === '') return 'home';
     return null;
   };
 
-  return checkMatch(path) || checkMatch(hash) || 'home';
+  return checkMatch(rawPath) || checkMatch(rawHash) || 'home';
 };
 
 export default function App() {
