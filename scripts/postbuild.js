@@ -17,13 +17,15 @@ if (!fs.existsSync(indexHtmlPath)) {
 
 const indexContent = fs.readFileSync(indexHtmlPath, 'utf8');
 
-// 1. Ensure Cloudflare Pages _redirects file exists in dist
+// 1. Ensure any legacy dist/_redirects file is removed to prevent Cloudflare loop error (code 100324)
 const redirectsPath = path.join(distDir, '_redirects');
-const redirectsContent = `# Cloudflare Pages Single Page Application (SPA) rewrite rules
-/*    /index.html   200
-`;
-fs.writeFileSync(redirectsPath, redirectsContent, 'utf8');
-console.log('[Post-Build] Created dist/_redirects (Cloudflare Pages SPA rewrite)');
+if (fs.existsSync(redirectsPath)) {
+  try {
+    fs.unlinkSync(redirectsPath);
+  } catch {
+    // ignore
+  }
+}
 
 // 2. Ensure dist/404.html is a full clone of index.html for static servers that fall back to 404.html
 const dist404Path = path.join(distDir, '404.html');

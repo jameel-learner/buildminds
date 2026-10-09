@@ -14,13 +14,19 @@ function cloudflareSpaPlugin(): Plugin {
 
       const htmlContent = fs.readFileSync(indexHtmlPath, 'utf8');
 
-      // 1. Ensure dist/_redirects for Cloudflare Pages SPA rewrite
-      const redirectsPath = path.join(distDir, '_redirects');
-      fs.writeFileSync(redirectsPath, '/*    /index.html   200\n', 'utf8');
-
-      // 2. Ensure dist/404.html fallback
+      // 1. Ensure dist/404.html fallback
       const dist404Path = path.join(distDir, '404.html');
       fs.writeFileSync(dist404Path, htmlContent, 'utf8');
+
+      // 2. Ensure any legacy _redirects file is removed to prevent Cloudflare loop error (code 100324)
+      const redirectsPath = path.join(distDir, '_redirects');
+      if (fs.existsSync(redirectsPath)) {
+        try {
+          fs.unlinkSync(redirectsPath);
+        } catch {
+          // ignore
+        }
+      }
 
       // 3. Generate static route directories & .html files
       // This ensures direct hits to /admin, /admin/, /weekly-event, etc. never 404
